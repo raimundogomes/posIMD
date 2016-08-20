@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.imd030.sgr">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icone"
+        android:label="@string/app_name">
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.ListaRequisicaoActivity"
+            android:label="@string/label_requisicoes" />
+        <activity
+            android:name=".activities.PacienteActivity"
+            android:label="@string/dados_paciente" />
+        <activity
+            android:name=".activities.DetalheRequisicaoActivity"
+            android:label="@string/label_requisicao" />
+        <activity
+            android:name=".activities.ConfiguracoesActivity"
+            android:label="@string/label_configuracoes" />
+        <activity
+            android:name=".activities.NovaRequisicaoActivity"
+            android:label="@string/label_nova_requisicao" />
+        <activity android:name=".activities.PesquisarPacienteActivity"
+            android:label="Pesquisar paciente" >
+        </activity>
+    </application>
+
+</manifest>
