@@ -30,9 +30,9 @@ public class PacienteServiceWS {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("nome/{nome}")
-	public List<Paciente> paciente(@PathParam("nome") String nome) throws PacienteNaoEncontradoException{
-		return pacienteDao.pesquisarPacientePorNome(nome);
+	@Path("nome")
+	public List<Paciente> paciente() throws PacienteNaoEncontradoException{
+		return pacienteDao.pesquisarPacientePorNome("");
 	}
 	
 	public void setPacienteDao(PacienteDao pacienteDao) {
