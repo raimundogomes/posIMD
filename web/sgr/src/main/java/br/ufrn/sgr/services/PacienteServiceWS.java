@@ -29,6 +29,13 @@ public class PacienteServiceWS {
 	}
 	
 	@GET
+	@Produces("application/json")
+	@Path("cpf/{cpf}")
+	public Paciente pesquisarPacientePorCPF(@PathParam("cpf") int cpf) throws PacienteNaoEncontradoException{
+		return pacienteDao.pesquisarPacientePorNumero(cpf);
+	}
+	
+	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("nome")
 	public List<Paciente> paciente() throws PacienteNaoEncontradoException{
