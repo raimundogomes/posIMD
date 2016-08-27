@@ -24,22 +24,23 @@ public class PacienteServiceWS {
 	@GET
 	@Produces("application/json")
 	@Path("prontuario/{numero}")
-	public Paciente paciente(@PathParam("numero") int prontuario) throws PacienteNaoEncontradoException{
+	public Paciente pesquisarPacientePorProntuario(@PathParam("numero") int prontuario) throws PacienteNaoEncontradoException{
+				
 		return pacienteDao.pesquisarPacientePorNumero(prontuario);
 	}
 	
 	@GET
 	@Produces("application/json")
 	@Path("cpf/{cpf}")
-	public Paciente pesquisarPacientePorCPF(@PathParam("cpf") int cpf) throws PacienteNaoEncontradoException{
-		return pacienteDao.pesquisarPacientePorNumero(cpf);
+	public Paciente pesquisarPacientePorCPF(@PathParam("cpf") String cpf) throws PacienteNaoEncontradoException{
+		return pacienteDao.pesquisarPacientePorCpf(cpf);
 	}
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("nome")
-	public List<Paciente> paciente() throws PacienteNaoEncontradoException{
-		return pacienteDao.pesquisarPacientePorNome("");
+	@Path("nome/{nome}")
+	public List<Paciente> paciente(@PathParam("nome") String nome) throws PacienteNaoEncontradoException{
+		return pacienteDao.pesquisarPacientePorNome(nome);
 	}
 	
 	public void setPacienteDao(PacienteDao pacienteDao) {

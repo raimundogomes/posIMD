@@ -92,7 +92,7 @@ public class NovaRequisicaoActivity extends Activity implements
         arrayPaciente = new String[listPacientes.size()];
 
         for (int i = 0; i < listPacientes.size(); i++){
-            arrayPaciente[i] = listPacientes.get(i).getNumeroProntuario() + " - " + listPacientes.get(i).getNome();
+            arrayPaciente[i] = listPacientes.get(i).getProntuario() + " - " + listPacientes.get(i).getNome();
         }
 
         ArrayAdapter<Paciente> adp = new ArrayAdapter<Paciente>(this, android.R.layout.simple_dropdown_item_1line, listPacientes);

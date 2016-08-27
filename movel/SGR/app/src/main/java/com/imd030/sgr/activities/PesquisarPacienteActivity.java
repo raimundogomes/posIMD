@@ -1,13 +1,13 @@
 package com.imd030.sgr.activities;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,8 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.imd030.sgr.R;
 import com.imd030.sgr.adapter.PacienteAdapter;
-import com.imd030.sgr.comparator.Paciente;
-import com.imd030.sgr.utils.NetworkQueue;
+import com.imd030.sgr.entity.Paciente;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,160 +31,152 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PesquisarPacienteActivity extends Activity  implements
-        View.OnClickListener{
-
-    private ProgressDialog load;
-
-    final String url = "http://192.168.0.27/sgr/service/paciente/nome";
+public class PesquisarPacienteActivity extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private RequestQueue queue;
 
-    private ListView listView;
+    final String url = "http://192.168.0.27/sgr/service/paciente/";
 
-    private PacienteAdapter pacienteAdapter;
+    private EditText prontuario;
 
-    private List<Paciente> listaPacientes;
+    private EditText cpf;
+
+    private EditText nomePaciente;
+
+    private ListView listview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesquisar_paciente);
 
+        Button button = (Button) findViewById(R.id.botao_pesquisar_paciente);
+
+        nomePaciente = (EditText) findViewById(R.id.text_nome_paciente);
+
         queue = Volley.newRequestQueue(this);
 
-        listView  = (ListView) findViewById(R.id.list_pacientes);
+        listview = (ListView) findViewById(R.id.listView_paciente);
 
-        listaPacientes = new ArrayList<Paciente>();
+        button.setOnClickListener(this);
 
-        pacienteAdapter = new PacienteAdapter(getApplicationContext(),  listaPacientes);
-
-        listView.setAdapter(pacienteAdapter);
-
-        Button pesquisar = (Button)findViewById(R.id.botao_pesquisar_paciente);
-
-        pesquisar.setOnClickListener(this);
-
+        listview.setOnItemClickListener(this);
 
     }
 
-    public void pesquisar(View v){
+    public boolean camposEstaoPreenchidos(){
         String prontuario =  ((TextView)findViewById(R.id.text_prontuario)).getText().toString();
         String cpf =  ((TextView)findViewById(R.id.text_cpf)).getText().toString();
         String nome = ((TextView) findViewById(R.id.text_nome_paciente)).getText().toString();
 
         if( !"".equals(prontuario) || !"".equals(cpf) || !"".equals(nome) ){
 
-            try {
-
-                JsonArrayRequest jsObjRequest = new JsonArrayRequest(Request.Method.GET,
-                        url, null, new Response
-                        .Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            Gson gson = new Gson();
-                            Log.i("Teste","teste 1");
-
-                            for (int i = 0; i < response.length(); ++i) {
-                                Paciente paciente = gson.fromJson(response.getJSONObject(i).toString(), Paciente.class);
-                                Log.i("Teste",paciente.getNome());
-                                listaPacientes.add(paciente);
-                            }
-
-                            pacienteAdapter.notifyDataSetChanged();
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.i("Tes53", error.toString());
-                        Toast.makeText(getApplicationContext(),
-                                "ERRO "+ error.toString(), Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
-
-                jsObjRequest.setTag("REST");
-
-                queue.add(jsObjRequest);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            return true;
 
         }
         else{
             Toast toast = Toast.makeText(this, "Preencha o prontuário, CPF ou nome do paciente!", Toast.LENGTH_SHORT);
             toast.show();
+
+            return false;
         }
 
     }
-
 
     @Override
-    public void onClick(View v) {
-        String prontuario =  ((TextView)findViewById(R.id.text_prontuario)).getText().toString();
-        String cpf =  ((TextView)findViewById(R.id.text_cpf)).getText().toString();
-        String nome = ((TextView) findViewById(R.id.text_nome_paciente)).getText().toString();
+    public void onClick(final View view) {
+        //enviando informação
+        Log.d("Teste", nomePaciente.getText().toString());
 
-        if( !"".equals(prontuario) || !"".equals(cpf) || !"".equals(nome) ){
+        if(camposEstaoPreenchidos()) {
+            String prontuario =  ((TextView)findViewById(R.id.text_prontuario)).getText().toString();
+            String cpf =  ((TextView)findViewById(R.id.text_cpf)).getText().toString();
 
-            try {
-
-                JsonArrayRequest jsObjRequest = new JsonArrayRequest(Request.Method.GET,
-                        url, null, new Response
-                        .Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            Gson gson = new Gson();
-                            Log.i("Teste","teste 1");
-
-                            for (int i = 0; i < response.length(); ++i) {
-                                Paciente paciente = gson.fromJson(response.getJSONObject(i).toString(), Paciente.class);
-                                Log.i("Teste",paciente.getNome());
-                                listaPacientes.add(paciente);
-                            }
-                            pacienteAdapter = new PacienteAdapter(getApplicationContext(),  listaPacientes);
-
-                            listView.setAdapter(pacienteAdapter);
-                            pacienteAdapter.notifyDataSetChanged();
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.i("Teste", error.toString());
-                        Toast.makeText(getApplicationContext(),
-                                "ERRO "+ error.toString(), Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
-
-                jsObjRequest.setTag("REST");
-
-                queue.add(jsObjRequest);
-            } catch (Exception e) {
-                e.printStackTrace();
+            if(!"".equals(prontuario) || !"".equals(cpf)){
+                Log.d("Teste", nomePaciente.getText().toString());
+            }
+            else{
+           
+                pesquisarPacientesPeloNome(view);
             }
 
         }
-        else{
-            Toast toast = Toast.makeText(this, "Preencha o prontuário, CPF ou nome do paciente!", Toast.LENGTH_SHORT);
-            toast.show();
+    }
+
+    private void pesquisarPacientesPeloNome(final View view) {
+        try {
+            String nome = ((TextView) findViewById(R.id.text_nome_paciente)).getText().toString();
+            String urlNome = url + "nome/" + nome;
+            JsonArrayRequest jsObjRequest = new JsonArrayRequest(Request.Method.GET, urlNome, null, new Response
+                    .Listener<JSONArray>() {
+
+                @Override
+                public void onResponse(JSONArray response) {
+                    try {
+                        Gson gson = new Gson();
+                        Log.i("Teste", "teste 1");
+                        final List<Paciente> list = new ArrayList<Paciente>();
+                        for (int i = 0; i < response.length(); ++i) {
+                            Paciente ubs = gson.fromJson(response.getJSONObject(i).toString(), Paciente.class);
+                            Log.i("Teste", ubs.getNome());
+                            list.add(ubs);
+                        }
+                        final PacienteAdapter adapter = new PacienteAdapter(view.getContext(), list);
+                        listview.setAdapter(adapter);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    Toast.makeText(getApplicationContext(),
+                            "ERRO ", Toast.LENGTH_LONG)
+                            .show();
+                }
+            });
+
+            jsObjRequest.setTag("REST");
+
+            queue.add(jsObjRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+
+        final String item = (String) parent.getItemAtPosition(position);
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET,
+                String.format(String.format(url, nomePaciente.getText().toString())+"/"+position, nomePaciente.getText().toString()), null, new Response
+                .Listener<JSONObject>(){
+            @Override
+            public void onResponse(JSONObject response) {
+
+                String strName = null;
+                try {
+                    Intent i = new Intent(PesquisarPacienteActivity.this, NovaRequisicaoActivity.class);
+                    i.putExtra("lat", response.getDouble("latitude"));
+                    i.putExtra("long", response.getDouble("longitude"));
+                    startActivity(i);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        queue.add(jsObjRequest);
 
     }
 }

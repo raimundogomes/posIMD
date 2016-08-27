@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.imd030.sgr.R;
-import com.imd030.sgr.comparator.Paciente;
+import com.imd030.sgr.entity.Paciente;
 
 import java.util.List;
 

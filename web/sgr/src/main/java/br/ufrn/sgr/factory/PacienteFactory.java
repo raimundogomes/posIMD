@@ -37,8 +37,23 @@ public class PacienteFactory {
 	}
 
 
-	public static List<Paciente> retornaPorNome(String nome) {
-		return new ArrayList<Paciente>(listaPacientes.values());
+	public static List<Paciente> retornaPorNome(String nomePaciente) {
+		
+		if(nomePaciente==null){
+			throw new IllegalArgumentException("Nome não informado");
+		}
+		
+		ArrayList<Paciente> lista = new ArrayList<Paciente>(listaPacientes.values());
+		
+		List<Paciente> listaFiltradas = new ArrayList<Paciente>();
+		
+		for(Paciente paciente: lista){
+            if(paciente.getNome().toLowerCase().contains(nomePaciente.toLowerCase())){
+            	listaFiltradas.add(paciente);
+            }
+        }
+		
+		return listaFiltradas;
 	}
 
 }

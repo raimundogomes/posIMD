@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class RequisicaoBuilder {
 
-    private static long numeroGerador = 1;
+    private static int numeroGerador = 1;
 
     public List<Requisicao> gerarRequisicoes() {
         List<Requisicao> requisicoes = new ArrayList<Requisicao>();
@@ -55,7 +55,7 @@ public class RequisicaoBuilder {
 
         }
 
-        Paciente paciente = new Paciente("0"+ numeroGerador+13, nomePaciente, "0"+ numeroGerador + 31, emailPaciente, "987654321");
+        Paciente paciente = new Paciente("0"+ numeroGerador+13, nomePaciente,  numeroGerador, emailPaciente, "987654321");
 
         requisicao.setPaciente(paciente);
 

@@ -16,7 +16,18 @@ public class PacienteDaoImpl implements PacienteDao {
 
 	@Override
 	public List<Paciente> pesquisarPacientePorNome(String nome) {
+		
+		if(nome==null){
+			throw new IllegalArgumentException("Nome não informado");
+		}
+		
 		return PacienteFactory.retornaPorNome(nome);
+	}
+
+	@Override
+	public Paciente pesquisarPacientePorCpf(String cpf) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

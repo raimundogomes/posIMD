@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import com.imd030.sgr.comparator.Paciente;
+import com.imd030.sgr.entity.Paciente;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,8 +13,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by allanromanato on 11/4/15.

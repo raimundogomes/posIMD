@@ -36,7 +36,7 @@ public class PacienteActivity extends Activity {
     private void atualizarTelaDadosPaciente(Paciente paciente) {
 
         TextView prontuario = (TextView) findViewById(R.id.text_prontuario);
-        prontuario.setText(paciente.getNumeroProntuario());
+        prontuario.setText(paciente.getProntuario());
 
         TextView cns = (TextView) findViewById(R.id.text_cns);
         cns.setText(paciente.getCns());
