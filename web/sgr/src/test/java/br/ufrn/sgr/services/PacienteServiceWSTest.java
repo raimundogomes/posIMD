@@ -26,7 +26,7 @@ public class PacienteServiceWSTest {
 	@Test
 	public void test() {
 		
-		WebResource webResource = client.resource("http://localhost:8080/sgr/service/paciente/inserirPaciente");
+		WebResource webResource = client.resource("http://localhost/sgr/service/paciente/inserirPaciente");
 		
 		String input = "{\"nome\":\"mais em\",\"prontuario\":\"1\",\"nomeMae\":\"Mariazinha\",\"cpf\":\"aa\" ,\"cns\":\"098\",\"dataNascimento\":\"18/12/2000\"}";
 
