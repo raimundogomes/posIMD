@@ -2,11 +2,8 @@ package com.imd030.sgr.activities;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.Parcelable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,17 +19,16 @@ import android.widget.Toast;
 
 import com.imd030.sgr.R;
 import com.imd030.sgr.builder.PacienteBuilder;
-import com.imd030.sgr.entiitys.Amostra;
-import com.imd030.sgr.entiitys.Exame;
-import com.imd030.sgr.entiitys.Laboratorio;
-import com.imd030.sgr.entiitys.Paciente;
-import com.imd030.sgr.entiitys.Requisicao;
-import com.imd030.sgr.entiitys.StatusRequisicao;
-import com.imd030.sgr.entiitys.TipoExame;
+import com.imd030.sgr.entity.Amostra;
+import com.imd030.sgr.entity.Exame;
+import com.imd030.sgr.entity.Laboratorio;
+import com.imd030.sgr.entity.Paciente;
+import com.imd030.sgr.entity.Requisicao;
+import com.imd030.sgr.entity.StatusRequisicao;
+import com.imd030.sgr.entity.TipoExame;
 import com.imd030.sgr.utils.Constantes;
 import com.imd030.sgr.utils.DateUtils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

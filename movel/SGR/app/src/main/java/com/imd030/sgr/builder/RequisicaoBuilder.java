@@ -1,10 +1,10 @@
 package com.imd030.sgr.builder;
 
-import com.imd030.sgr.entiitys.Laboratorio;
-import com.imd030.sgr.entiitys.Paciente;
-import com.imd030.sgr.entiitys.Requisicao;
-import com.imd030.sgr.entiitys.Solicitante;
-import com.imd030.sgr.entiitys.StatusRequisicao;
+import com.imd030.sgr.entity.Laboratorio;
+import com.imd030.sgr.entity.Paciente;
+import com.imd030.sgr.entity.Requisicao;
+import com.imd030.sgr.entity.Solicitante;
+import com.imd030.sgr.entity.StatusRequisicao;
 
 import java.util.ArrayList;
 import java.util.Date;

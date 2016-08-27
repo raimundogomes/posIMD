@@ -1,9 +1,8 @@
 package com.imd030.sgr.utils;
 
 import android.content.Intent;
-import android.widget.Toast;
 
-import com.imd030.sgr.entiitys.Email;
+import com.imd030.sgr.entity.Email;
 
 /**
  * Created by Neto on 02/06/2016.

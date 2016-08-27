@@ -1,10 +1,9 @@
 package com.imd030.sgr.comparator;
 
-import com.imd030.sgr.entiitys.Requisicao;
+import com.imd030.sgr.entity.Requisicao;
 import com.imd030.sgr.utils.Constantes;
 
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * Created by thiago on 05/06/16.

@@ -9,8 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.imd030.sgr.R;
-import com.imd030.sgr.entiitys.Email;
-import com.imd030.sgr.entiitys.Paciente;
+import com.imd030.sgr.entity.Email;
+import com.imd030.sgr.entity.Paciente;
 import com.imd030.sgr.utils.Constantes;
 
 import com.imd030.sgr.utils.EmailUtil;

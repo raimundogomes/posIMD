@@ -1,4 +1,4 @@
-package com.imd030.sgr.entiitys;
+package com.imd030.sgr.entity;
 
 /**
  * Created by Neto on 02/06/2016.

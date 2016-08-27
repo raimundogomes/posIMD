@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.imd030.sgr.R;
 import com.imd030.sgr.adapter.ExameAdapter;
-import com.imd030.sgr.entiitys.Requisicao;
+import com.imd030.sgr.entity.Requisicao;
 import com.imd030.sgr.utils.Constantes;
 import com.imd030.sgr.utils.DateUtils;
 

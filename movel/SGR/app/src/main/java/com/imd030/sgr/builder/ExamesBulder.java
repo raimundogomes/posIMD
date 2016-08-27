@@ -1,9 +1,9 @@
 package com.imd030.sgr.builder;
 
-import com.imd030.sgr.entiitys.Exame;
-import com.imd030.sgr.entiitys.ResultadoExame;
-import com.imd030.sgr.entiitys.SituacaoAmostra;
-import com.imd030.sgr.entiitys.TipoExame;
+import com.imd030.sgr.entity.Exame;
+import com.imd030.sgr.entity.ResultadoExame;
+import com.imd030.sgr.entity.SituacaoAmostra;
+import com.imd030.sgr.entity.TipoExame;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,8 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.imd030.sgr.R;
-import com.imd030.sgr.entiitys.Exame;
-import com.imd030.sgr.entiitys.Requisicao;
+import com.imd030.sgr.entity.Exame;
 import com.imd030.sgr.utils.DateUtils;
 
 import java.util.List;

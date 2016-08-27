@@ -1,6 +1,6 @@
 package com.imd030.sgr.builder;
 
-import com.imd030.sgr.entiitys.Paciente;
+import com.imd030.sgr.entity.Paciente;
 
 import java.util.ArrayList;
 import java.util.List;

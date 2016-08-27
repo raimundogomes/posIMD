@@ -1,4 +1,4 @@
-package com.imd030.sgr.entiitys;
+package com.imd030.sgr.entity;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,15 +1,15 @@
-package com.imd030.sgr.entiitys;
+package com.imd030.sgr.entity;
 
 /**
- * Created by Neto on 04/06/2016.
+ * Created by thiago on 29/05/16.
  */
-public enum ResultadoExame {
-    POSITIVO(1, "Positivo"), NEGATIVO(2,"Negativo"), ANALISE_NAO_REALIZADA(3,"Análise não realizada");
+public enum MetodoAmostra {
+    TESTE_SENSIBILIDADE(1, "Sensibilidade"), CULTURA(2,"Cultura");
 
     private int codigo;
     private String descricao;
 
-    ResultadoExame(int codigo, String descricao) {
+    MetodoAmostra(int codigo, String descricao) {
         this.codigo = codigo;
         this.descricao = descricao;
     }

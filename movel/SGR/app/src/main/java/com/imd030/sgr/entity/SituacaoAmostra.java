@@ -1,15 +1,22 @@
-package com.imd030.sgr.entiitys;
+package com.imd030.sgr.entity;
 
 /**
  * Created by thiago on 29/05/16.
  */
-public enum MetodoAmostra {
-    TESTE_SENSIBILIDADE(1, "Sensibilidade"), CULTURA(2,"Cultura");
+public enum SituacaoAmostra {
+
+    COLETADA(1, "Coletada"),
+
+    EM_ANALISE(2, "Em análise"),
+
+    LIBERADA(3, "Liberada"),
+
+    CANCELADA(4, "Cancelada");
 
     private int codigo;
     private String descricao;
 
-    MetodoAmostra(int codigo, String descricao) {
+    SituacaoAmostra(int codigo, String descricao) {
         this.codigo = codigo;
         this.descricao = descricao;
     }
