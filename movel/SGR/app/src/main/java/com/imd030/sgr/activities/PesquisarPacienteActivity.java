@@ -37,12 +37,6 @@ public class PesquisarPacienteActivity extends Activity implements View.OnClickL
 
     final String url = "http://192.168.0.27/sgr/service/paciente/";
 
-    private EditText prontuario;
-
-    private EditText cpf;
-
-    private EditText nomePaciente;
-
     private ListView listview;
 
     @Override
@@ -51,8 +45,6 @@ public class PesquisarPacienteActivity extends Activity implements View.OnClickL
         setContentView(R.layout.activity_pesquisar_paciente);
 
         Button button = (Button) findViewById(R.id.botao_pesquisar_paciente);
-
-        nomePaciente = (EditText) findViewById(R.id.text_nome_paciente);
 
         queue = Volley.newRequestQueue(this);
 
@@ -86,21 +78,54 @@ public class PesquisarPacienteActivity extends Activity implements View.OnClickL
     @Override
     public void onClick(final View view) {
         //enviando informação
-        Log.d("Teste", nomePaciente.getText().toString());
 
         if(camposEstaoPreenchidos()) {
             String prontuario =  ((TextView)findViewById(R.id.text_prontuario)).getText().toString();
             String cpf =  ((TextView)findViewById(R.id.text_cpf)).getText().toString();
 
             if(!"".equals(prontuario) || !"".equals(cpf)){
-                Log.d("Teste", nomePaciente.getText().toString());
+                Log.d("Teste", "pesquisar por prontuário");
+                pesquisarPaciente(prontuario, cpf);
             }
             else{
-           
+
                 pesquisarPacientesPeloNome(view);
             }
 
         }
+    }
+
+    private void pesquisarPaciente(String prontuario, String cpf) {
+        String urlPaciente = url;
+
+        if(!"".equals(prontuario)){
+            urlPaciente += "prontuario/"+prontuario;
+        }else{
+            urlPaciente += "cpf/"+cpf;
+        }
+
+        Log.d("Teste", urlPaciente);
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, urlPaciente, null, new Response
+                .Listener<JSONObject>(){
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("Teste", response.toString());
+                Gson gson = new Gson();
+
+                    Paciente paciente = gson.fromJson(response.toString(), Paciente.class);
+                    Intent i = new Intent(PesquisarPacienteActivity.this, NovaRequisicaoActivity.class);
+                    startActivity(i);
+
+            }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        queue.add(jsObjRequest);
     }
 
     private void pesquisarPacientesPeloNome(final View view) {
@@ -117,9 +142,9 @@ public class PesquisarPacienteActivity extends Activity implements View.OnClickL
                         Log.i("Teste", "teste 1");
                         final List<Paciente> list = new ArrayList<Paciente>();
                         for (int i = 0; i < response.length(); ++i) {
-                            Paciente ubs = gson.fromJson(response.getJSONObject(i).toString(), Paciente.class);
-                            Log.i("Teste", ubs.getNome());
-                            list.add(ubs);
+                            Paciente paciente = gson.fromJson(response.getJSONObject(i).toString(), Paciente.class);
+                            Log.i("Teste", paciente.getNome());
+                            list.add(paciente);
                         }
                         final PacienteAdapter adapter = new PacienteAdapter(view.getContext(), list);
                         listview.setAdapter(adapter);
@@ -152,31 +177,7 @@ public class PesquisarPacienteActivity extends Activity implements View.OnClickL
 
         final String item = (String) parent.getItemAtPosition(position);
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET,
-                String.format(String.format(url, nomePaciente.getText().toString())+"/"+position, nomePaciente.getText().toString()), null, new Response
-                .Listener<JSONObject>(){
-            @Override
-            public void onResponse(JSONObject response) {
 
-                String strName = null;
-                try {
-                    Intent i = new Intent(PesquisarPacienteActivity.this, NovaRequisicaoActivity.class);
-                    i.putExtra("lat", response.getDouble("latitude"));
-                    i.putExtra("long", response.getDouble("longitude"));
-                    startActivity(i);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        },new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-
-        queue.add(jsObjRequest);
 
     }
 }
