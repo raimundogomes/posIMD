@@ -11,7 +11,7 @@ import com.imd030.sgr.R;
 import com.imd030.sgr.utils.Constantes;
 
 
-public class ConfiguracoesActivity extends Activity{
+public class ConfiguracoesActivity extends PrincipalActivity{
 
 	private RadioGroup radioOrdenacaoGroup;
 

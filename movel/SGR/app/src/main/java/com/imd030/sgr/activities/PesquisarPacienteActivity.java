@@ -1,7 +1,10 @@
 package com.imd030.sgr.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,7 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PesquisarPacienteActivity extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class PesquisarPacienteActivity extends PrincipalActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private RequestQueue queue;
 

@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.imd030.sgr.R;
 import com.imd030.sgr.utils.Constantes;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends PrincipalActivity {
 
 	private EditText usuario;
 	private EditText senha;

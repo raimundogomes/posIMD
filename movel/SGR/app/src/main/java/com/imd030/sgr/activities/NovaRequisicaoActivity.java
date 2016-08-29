@@ -36,7 +36,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 
-public class NovaRequisicaoActivity extends Activity implements
+public class NovaRequisicaoActivity extends PrincipalActivity implements
         View.OnClickListener,
         AdapterView.OnItemClickListener{
 

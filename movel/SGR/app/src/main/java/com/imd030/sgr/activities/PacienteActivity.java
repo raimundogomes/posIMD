@@ -15,7 +15,7 @@ import com.imd030.sgr.utils.Constantes;
 
 import com.imd030.sgr.utils.EmailUtil;
 
-public class PacienteActivity extends Activity {
+public class PacienteActivity extends PrincipalActivity {
 
     private Paciente paciente;
 
@@ -36,7 +36,7 @@ public class PacienteActivity extends Activity {
     private void atualizarTelaDadosPaciente(Paciente paciente) {
 
         TextView prontuario = (TextView) findViewById(R.id.text_prontuario);
-        prontuario.setText(paciente.getProntuario());
+        prontuario.setText(paciente.getProntuario().toString());
 
         TextView cns = (TextView) findViewById(R.id.text_cns);
         cns.setText(paciente.getCns());

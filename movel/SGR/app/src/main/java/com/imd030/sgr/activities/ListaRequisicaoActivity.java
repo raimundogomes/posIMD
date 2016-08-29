@@ -37,7 +37,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ListaRequisicaoActivity extends Activity implements AdapterView.OnItemClickListener,
+public class ListaRequisicaoActivity extends PrincipalActivity implements AdapterView.OnItemClickListener,
         AdapterView.OnItemLongClickListener,
         DialogInterface.OnClickListener,
         TextWatcher {

@@ -15,7 +15,7 @@ import com.imd030.sgr.entity.Requisicao;
 import com.imd030.sgr.utils.Constantes;
 import com.imd030.sgr.utils.DateUtils;
 
-public class DetalheRequisicaoActivity extends Activity {
+public class DetalheRequisicaoActivity extends PrincipalActivity {
 
     private Requisicao requisicao;
 
@@ -42,6 +42,7 @@ public class DetalheRequisicaoActivity extends Activity {
 
         TextView situacaoRequisicao = (TextView) findViewById(R.id.text_situacaoRequisicao);
         situacaoRequisicao.setText(requisicao.getStatus().getDescricao());
+
 
         TextView numeroRequisicao = (TextView) findViewById(R.id.text_numeroRequisicao);
         numeroRequisicao.setText(requisicao.getNumeroFormatado());

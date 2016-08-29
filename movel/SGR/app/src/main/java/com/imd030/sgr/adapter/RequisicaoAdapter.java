@@ -1,10 +1,12 @@
 package com.imd030.sgr.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.imd030.sgr.R;
@@ -47,6 +49,9 @@ public class RequisicaoAdapter extends ArrayAdapter<Requisicao>{
         //status
         TextView textViewStatus = (TextView) view.findViewById(R.id.text_status);
         textViewStatus.setText(requisicao.getStatus().getDescricao());
+//
+//        ImageView imageView = (ImageView) view.findViewById(R.id.image_situacao);
+//        imageView.setImageBitmap(new Bitmap( R.mipmap.ic_autorenew_black_24dp));
 
         //paciente
         TextView textViewPaciente = (TextView) view.findViewById(R.id.text_paciente);
