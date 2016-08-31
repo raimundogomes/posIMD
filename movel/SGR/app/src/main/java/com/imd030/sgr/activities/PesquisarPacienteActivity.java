@@ -42,7 +42,7 @@ public class PesquisarPacienteActivity extends PrincipalActivity implements View
 
     private RequestQueue queue;
 
-    final String url = "http://192.168.25.30:8080/sgr/service/paciente/";
+    final String url = "http://192.168.0.11/sgr/service/paciente/";
 
     private ListView listview;
 
@@ -92,7 +92,7 @@ public class PesquisarPacienteActivity extends PrincipalActivity implements View
 
             if(!"".equals(prontuario) || !"".equals(cpf)){
                 Log.d("Teste", "pesquisar por prontuário");
-                pesquisarPaciente(prontuario, cpf);
+                pesquisarPaciente(prontuario, cpf, view);
             }
             else{
 
@@ -102,7 +102,7 @@ public class PesquisarPacienteActivity extends PrincipalActivity implements View
         }
     }
 
-    private void pesquisarPaciente(String prontuario, String cpf) {
+    private void pesquisarPaciente(String prontuario, String cpf,final View view) {
         String urlPaciente = url;
 
         if(!"".equals(prontuario)){
@@ -121,8 +121,10 @@ public class PesquisarPacienteActivity extends PrincipalActivity implements View
                 Gson gson = new Gson();
 
                     Paciente paciente = gson.fromJson(response.toString(), Paciente.class);
-                    Intent i = new Intent(PesquisarPacienteActivity.this, NovaRequisicaoActivity.class);
-                    startActivity(i);
+                    final List<Paciente> list = new ArrayList<Paciente>();
+                    list.add(paciente);
+                    final PacienteAdapter adapter = new PacienteAdapter(view.getContext(), list);
+                    listview.setAdapter(adapter);
 
             }
         },new Response.ErrorListener(){
