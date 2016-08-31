@@ -345,7 +345,10 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
     public void afterTextChanged(Editable s) {}
 
     public void novaRequisicao() {
-        Intent intent = new Intent(this, NovaRequisicaoActivity.class);
+        //Intent intent = new Intent(this, NovaRequisicaoActivity.class);
+        //startActivityForResult(intent, Constantes.INDICE_ACTIVITY_NOVA_REQUISICAO);
+
+        Intent intent = new Intent(this, PesquisarPacienteActivity.class);
         startActivityForResult(intent, Constantes.INDICE_ACTIVITY_NOVA_REQUISICAO);
     }
 }

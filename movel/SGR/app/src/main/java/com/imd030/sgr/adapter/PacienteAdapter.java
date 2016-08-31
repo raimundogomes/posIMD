@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.imd030.sgr.R;
 import com.imd030.sgr.entity.Paciente;
+import com.imd030.sgr.utils.DateUtils;
 
 import java.util.List;
 
@@ -32,9 +33,25 @@ public class PacienteAdapter extends ArrayAdapter<Paciente> {
             view = LayoutInflater.from(context).inflate(R.layout.item_list_pacientes, null);
         }
 
-        //data de requisição
-        TextView textViewNome = (TextView) view.findViewById(R.id.text_nome_paciente);
+        //prontuário
+        TextView textViewProntuario = (TextView) view.findViewById(R.id.text_prontuario);
+        textViewProntuario.setText(String.valueOf(paciente.getProntuario()));
+
+        //cpf
+        TextView textViewCPF = (TextView) view.findViewById(R.id.text_cpf);
+        textViewCPF.setText(paciente.getCpf());
+
+        //nome do paciente
+        TextView textViewNome = (TextView) view.findViewById(R.id.text_paciente);
         textViewNome.setText(paciente.getNome());
+
+        //nome da mãe
+        TextView textViewNomeMae = (TextView) view.findViewById(R.id.text_mae);
+        textViewNomeMae.setText(paciente.getNomeMae());
+
+        //data de nascimento
+        TextView textViewDataNascimento = (TextView) view.findViewById(R.id.text_dataNascimento);
+        textViewDataNascimento.setText(paciente.getDataNascimento());
 
         return view;
     }

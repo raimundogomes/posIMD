@@ -25,20 +25,24 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.imd030.sgr.R;
 import com.imd030.sgr.adapter.PacienteAdapter;
+import com.imd030.sgr.comparator.RequisicaoComparator;
 import com.imd030.sgr.entity.Paciente;
+import com.imd030.sgr.entity.Requisicao;
+import com.imd030.sgr.utils.Constantes;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PesquisarPacienteActivity extends PrincipalActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private RequestQueue queue;
 
-    final String url = "http://192.168.0.27/sgr/service/paciente/";
+    final String url = "http://192.168.25.30:8080/sgr/service/paciente/";
 
     private ListView listview;
 
@@ -177,10 +181,27 @@ public class PesquisarPacienteActivity extends PrincipalActivity implements View
 
     @Override
     public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+        Paciente paciente = (Paciente) parent.getItemAtPosition(position);
+        Intent intent = new Intent(this, NovaRequisicaoActivity.class);
+        intent.putExtra(Constantes.DADOS_PACIENTE_REQUISICAO_NOVA_ACTIVITY, paciente);
+        startActivityForResult(intent, Constantes.INDICE_ACTIVITY_NOVA_REQUISICAO);
+    }
 
-        final String item = (String) parent.getItemAtPosition(position);
-
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case Constantes.INDICE_ACTIVITY_NOVA_REQUISICAO:
+                if(resultCode == RESULT_OK){
+                    Requisicao novaRequisicao = (Requisicao) data.getSerializableExtra(Constantes.REQUISICAO_NOVA_ACTIVITY);
+                    Intent result = new Intent();
+                    result.putExtra(Constantes.REQUISICAO_NOVA_ACTIVITY, novaRequisicao);
+                    setResult(RESULT_OK, result);
+                    finish();
+                }
+                break;
+            default:
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

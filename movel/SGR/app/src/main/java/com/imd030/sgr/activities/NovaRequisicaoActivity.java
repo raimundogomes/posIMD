@@ -37,8 +37,7 @@ import java.util.List;
 import java.util.Random;
 
 public class NovaRequisicaoActivity extends PrincipalActivity implements
-        View.OnClickListener,
-        AdapterView.OnItemClickListener{
+        View.OnClickListener{
 
     public static final int ID_DATA_REQUISICAO_SANGUE = 0;
 
@@ -47,24 +46,17 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
     private static final String EDIT_SANGUE = "Sangue";
     private static final String EDIT_URINA = "Urina";
     private static final String LABORATRIO = "Laboratorio";
-    private static final String PACIENTE = "Paciente";
 
     Laboratorio laboratorio1 = new Laboratorio("Microbiologia", "84987879798");
     Laboratorio laboratorio2 = new Laboratorio("Citologia", "22222222222");
 
-    private List<Paciente> listPacientes = PacienteBuilder.getPacientes();
-
     private List<Laboratorio> listLaboratorio = new ArrayList<Laboratorio>();
 
-    private String[] arrayPaciente;
-
-    private AutoCompleteTextView pacientes;
+    private Paciente paciente;
 
     private Spinner spinnerLaboratorio;
 
     private CheckBox checkBoxSangue;
-
-    private Paciente pacienteSelecionado;
 
     private ImageButton imgBtnCalendarioSangue;
 
@@ -89,16 +81,12 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nova_requisicao);
 
-        arrayPaciente = new String[listPacientes.size()];
+        //paciente
+        Intent intent = getIntent();
 
-        for (int i = 0; i < listPacientes.size(); i++){
-            arrayPaciente[i] = listPacientes.get(i).getProntuario() + " - " + listPacientes.get(i).getNome();
-        }
+        paciente = (Paciente) intent.getExtras().get(Constantes.DADOS_PACIENTE_REQUISICAO_NOVA_ACTIVITY);
 
-        ArrayAdapter<Paciente> adp = new ArrayAdapter<Paciente>(this, android.R.layout.simple_dropdown_item_1line, listPacientes);
-        pacientes = (AutoCompleteTextView) findViewById(R.id.pacientes);
-        pacientes.setOnItemClickListener(this);
-        pacientes.setAdapter(adp);
+        atualizarDadosPaciente(paciente);
 
         //Spinner dos laboratórios
         spinnerLaboratorio = (Spinner) findViewById(R.id.spinnerLaboratorio);
@@ -134,12 +122,20 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
         buttonSalvar.setOnClickListener(this);
     }
 
+    private void atualizarDadosPaciente(Paciente paciente) {
+
+        TextView prontuario = (TextView) findViewById(R.id.txtProntuario);
+        prontuario.setText(paciente.getProntuario().toString());
+
+        TextView nome = (TextView) findViewById(R.id.txtNomePaciente);
+        nome.setText(paciente.getNome());
+    }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString(EDIT_SANGUE, (String) txtDataAmostraExameSangue.getText().toString());
         outState.putString(EDIT_URINA, (String) txtDataAmostraExameUrina.getText().toString());
         outState.putInt(LABORATRIO, spinnerLaboratorio.getSelectedItemPosition());
-        outState.putSerializable(PACIENTE, pacienteSelecionado);
         super.onSaveInstanceState(outState);
     }
 
@@ -147,7 +143,6 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
         super.onRestoreInstanceState(savedInstanceState);
         txtDataAmostraExameSangue.setText(savedInstanceState.getString(EDIT_SANGUE));
         txtDataAmostraExameUrina.setText(savedInstanceState.getString(EDIT_URINA));
-        pacienteSelecionado = (Paciente) savedInstanceState.getSerializable(PACIENTE);
         spinnerLaboratorio.setSelection(savedInstanceState.getInt(LABORATRIO));
     }
 
@@ -194,7 +189,7 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
         requisicao.setNumero(gerador.nextInt(10000));
         requisicao.setDataRequisicao(new Date());
 
-        requisicao.setPaciente(pacienteSelecionado);
+        requisicao.setPaciente(paciente);
         requisicao.setLaboratorio((Laboratorio) spinnerLaboratorio.getSelectedItem());
 
         List<Exame> listExames = new ArrayList<>();
@@ -253,9 +248,4 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
         }
     };
 
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        pacienteSelecionado = listPacientes.get(position);
-    }
 }
