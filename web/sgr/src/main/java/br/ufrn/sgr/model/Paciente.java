@@ -2,7 +2,7 @@ package br.ufrn.sgr.model;
 
 public class Paciente {
 
-	private Integer prontuario;
+	private Long prontuario;
 	
 	private String nome;
 	
@@ -14,6 +14,46 @@ public class Paciente {
 	
 	private String dataNascimento;
 	
+    private String email;
+
+    private String telefone;
+	
+	  public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+
+	/**
+     * Construtor
+     * @param cns carteira nacional de saúde - cns.
+     * @param nome Nome do Paciente.
+     * @param prontuario Número do paciente.
+     * @param email e-mail paciente.
+     */
+    public Paciente(String cns, String nome, Long prontuario, String email, String telefone) {
+        this.cns = cns;
+        this.nome = nome;
+        this.prontuario = prontuario;
+        this.email = email;
+        this.telefone = telefone;
+    }
+
+	
 	/**
 	 * 
 	 * @param prontuario
@@ -23,7 +63,7 @@ public class Paciente {
 	 * @param cpf
 	 * @param cns
 	 */
-	public Paciente(Integer prontuario,String nome, String dataNascimento, String nomeMae, String cpf, String cns) {
+	public Paciente(Long prontuario,String nome, String dataNascimento, String nomeMae, String cpf, String cns) {
 		super();
 		this.prontuario = prontuario;
 		this.dataNascimento = dataNascimento;
@@ -37,7 +77,7 @@ public class Paciente {
 		super();
 	}
 
-	public Integer getProntuario() {
+	public Long getProntuario() {
 		return prontuario;
 	}
 
@@ -65,7 +105,7 @@ public class Paciente {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public void setProntuario(Integer title) {
+	public void setProntuario(Long title) {
 		this.prontuario = title;
 	}
 

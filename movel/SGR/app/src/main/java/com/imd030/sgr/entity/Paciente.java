@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class Paciente  implements Serializable {
 
-    private Integer prontuario;
+    private Long prontuario;
 
     private String nome;
 
@@ -46,7 +46,7 @@ public class Paciente  implements Serializable {
      * @param cpf
      * @param cns
      */
-    public Paciente(Integer prontuario,String nome, String dataNascimento, String nomeMae, String cpf, String cns) {
+    public Paciente(Long prontuario,String nome, String dataNascimento, String nomeMae, String cpf, String cns) {
         super();
         this.prontuario = prontuario;
         this.dataNascimento = dataNascimento;
@@ -63,7 +63,7 @@ public class Paciente  implements Serializable {
      * @param prontuario Número do paciente.
      * @param email e-mail paciente.
      */
-    public Paciente(String cns, String nome, int prontuario, String email, String telefone) {
+    public Paciente(String cns, String nome, long prontuario, String email, String telefone) {
         this.cns = cns;
         this.nome = nome;
         this.prontuario = prontuario;
@@ -75,7 +75,7 @@ public class Paciente  implements Serializable {
         super();
     }
 
-    public Integer getProntuario() {
+    public Long getProntuario() {
         return prontuario;
     }
 
@@ -103,7 +103,7 @@ public class Paciente  implements Serializable {
         this.dataNascimento = dataNascimento;
     }
 
-    public void setProntuario(Integer title) {
+    public void setProntuario(Long title) {
         this.prontuario = title;
     }
 

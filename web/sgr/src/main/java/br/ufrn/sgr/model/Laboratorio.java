@@ -2,12 +2,14 @@ package br.ufrn.sgr.model;
 
 import java.io.Serializable;
 
-/**
- * Created by thiago on 29/05/16.
- */
 public class Laboratorio implements Serializable{
 
-    private String nome;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private String nome;
 
     private String telefone;
 

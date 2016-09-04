@@ -44,7 +44,7 @@ public class Utils {
             //Atribui os objetos que estão nas camadas mais altas
             pessoa.setNome(obj.getString("nome"));
             pessoa.setNomeMae(obj.getString("nomeMae"));
-            pessoa.setProntuario(obj.getInt("prontuario"));
+            pessoa.setProntuario(obj.getLong("prontuario"));
             pessoa.setCns(obj.getString("cns"));
 
             pessoa.setDataNascimento(obj.getString("dataNascimento"));

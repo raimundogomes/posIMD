@@ -4,9 +4,9 @@ public class PacienteNaoEncontradoException extends Exception {
 	
 	private static final long serialVersionUID = 1L;
 
-	private int prontuario;
+	private long prontuario;
 
-	public PacienteNaoEncontradoException(int prontuario) {
+	public PacienteNaoEncontradoException(long prontuario) {
 		super();
 		this.prontuario = prontuario;
 	}

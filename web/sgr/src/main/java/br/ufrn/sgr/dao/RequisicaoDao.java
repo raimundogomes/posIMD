@@ -8,4 +8,6 @@ public interface RequisicaoDao {
 
 	void atualizar(Requisicao requisicao);
 
+	Requisicao cancelar(long numeroRequisicao);
+
 }

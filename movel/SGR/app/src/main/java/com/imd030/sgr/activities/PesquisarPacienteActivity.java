@@ -41,8 +41,8 @@ import java.util.List;
 public class PesquisarPacienteActivity extends PrincipalActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private RequestQueue queue;
-
-    final String url = "http://192.168.0.11/sgr/service/paciente/";
+       //192.168.0.11
+    final String url = "http://192.168.0.27/sgr/service/paciente/";
 
     private ListView listview;
 

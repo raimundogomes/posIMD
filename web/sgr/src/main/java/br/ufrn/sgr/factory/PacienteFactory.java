@@ -10,10 +10,10 @@ import br.ufrn.sgr.model.Paciente;
 
 public class PacienteFactory {
 	
-	private static Map<Integer, Paciente> listaPacientes =  new HashMap<Integer,Paciente>();
+	private static Map<Long, Paciente> listaPacientes =  new HashMap<Long,Paciente>();
 	
 	static{
-		int  i = 1000;
+		long  i = 1000;
 		listaPacientes.put(i, new Paciente(i++, "Machado de Assis", "21/06/1838", "Maria Machado da Câmara", "00079265403", "000023838"));
 		listaPacientes.put(i, new Paciente(i++, "José de Alencar", "21/06/1867", "Guilhermina Siva", "98779265403", "000923838"));
 		listaPacientes.put(i, new Paciente(i++, "Lima Barreto", "21/06/1890", "Clarice Lispector", "89379215403", "10023838"));
@@ -26,7 +26,7 @@ public class PacienteFactory {
 	}
 	
 	
-	public static Paciente getByNumeroProntuario(int prontuario) throws PacienteNaoEncontradoException{
+	public static Paciente getByNumeroProntuario(long prontuario) throws PacienteNaoEncontradoException{
 		
 		if(listaPacientes.containsKey(prontuario)){
 			return listaPacientes.get(prontuario);
