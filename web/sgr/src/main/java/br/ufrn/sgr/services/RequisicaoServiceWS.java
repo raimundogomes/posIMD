@@ -1,10 +1,16 @@
 package br.ufrn.sgr.services;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -47,6 +53,54 @@ public class RequisicaoServiceWS {
 		return requisicaoDao.cancelar(numeroRequisicao);
 
 		
+	}
+	
+
+	@GET
+	@Path("/pesquisarRequisicao")
+	@Produces("text/html; charset=UTF-8")
+	public String pesquisarRequisicao(@DefaultValue("0") @QueryParam("inicio") int inicio,
+			@DefaultValue("10") @QueryParam("limite") int limite)
+	{
+		int menorLimite = (requisicaoDao.listarRequisicoes().size()>limite)?limite:requisicaoDao.listarRequisicoes().size();
+		
+		List<Requisicao> lista = requisicaoDao.listarRequisicoes().subList(inicio, menorLimite);
+		
+		String listahtml = "Lista de requisições: </br></br><HR SIZE='2'></hr> ";
+		
+		for (Requisicao requisicao : lista) {
+			listahtml += "</br> Número: " + requisicao.getNumeroFormatado() + "</br> "; 
+			listahtml +=  "</br> Data da requisição: " + requisicao.getDataRequisicao() + "</br> ";
+			listahtml +=  "</br> Data da requisição: " + requisicao.getDataFim() + "</br> ";
+			listahtml +=  "</br> " + requisicao.getPaciente() + "</br> "; 
+			listahtml +=  "</br> Laboratório: " + requisicao.getLaboratorio() + "</br> ";
+			listahtml +=  "</br> Exames:  " + requisicao.getExamesFormatados()+ "</br></br><HR SIZE='2'></hr> "; 
+		}
+		
+		return listahtml;
+	}
+	
+	@GET
+	@Path("/pesquisarRequisicao/numero/{numero}")
+	@Produces("text/html; charset=UTF-8")
+	public String pesquisarRequisicao(@DefaultValue("0") @PathParam("numero") long numero)
+	{
+		Requisicao requisicao = requisicaoDao.pesquisarPorNumero(numero);
+		
+		if(requisicao.getDataRequisicao()==null){
+			return "Requisição número "+ numero+" não encontrada.";
+		}
+		
+		String listahtml = "Requisição: </br></br><HR SIZE='2'></hr> ";
+		
+		listahtml += "</br> Número: " + requisicao.getNumeroFormatado() + "</br> "; 
+		listahtml +=  "</br> Data da requisição: " + requisicao.getDataRequisicao() + "</br> ";
+		listahtml +=  "</br> Data da requisição: " + requisicao.getDataFim() + "</br> ";
+		listahtml +=  "</br> " + requisicao.getPaciente() + "</br> "; 
+		listahtml +=  "</br> Laboratório: " + requisicao.getLaboratorio() + "</br> ";
+		listahtml +=  "</br> Exames:  " + requisicao.getExamesFormatados()+ "</br></br><HR SIZE='2'></hr> "; 
+		
+		return listahtml;
 	}
 
 	public RequisicaoServiceWS() {

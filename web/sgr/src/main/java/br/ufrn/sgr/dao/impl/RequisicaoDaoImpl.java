@@ -1,5 +1,8 @@
 package br.ufrn.sgr.dao.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.ufrn.sgr.builder.RequisicaoBuilder;
 import br.ufrn.sgr.dao.RequisicaoDao;
 import br.ufrn.sgr.model.Requisicao;
@@ -25,6 +28,17 @@ public class RequisicaoDaoImpl implements RequisicaoDao {
 		Requisicao requisicao = RequisicaoBuilder.getRequisicao(numeroRequisicao);
 		requisicao.setStatus(StatusRequisicao.CANCELADA);
 		return requisicao;
+	}
+
+	@Override
+	public List<Requisicao> listarRequisicoes() {
+		return new ArrayList<Requisicao>(RequisicaoBuilder.getRequisicoes().values());
+	}
+
+	@Override
+	public Requisicao pesquisarPorNumero(long numero) {
+		
+		return RequisicaoBuilder.getRequisicao(numero);
 	}
 
 }

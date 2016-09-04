@@ -34,7 +34,7 @@ public class Requisicao implements Serializable {
 
 
     public Requisicao() {
-        numero++;
+        
     }
 
     public List<Exame> getExames() {
@@ -116,4 +116,13 @@ public class Requisicao implements Serializable {
     public String getExamesFormatados(){
         return exames.toString();
     }
+
+	@Override
+	public String toString() {
+		return "Requisicao [dataRequisicao=" + dataRequisicao + ", paciente=" + paciente + ", status=" + status
+				+ ", numero=" + numero + ", laboratorio=" + laboratorio + ", exames=" + exames + ", dataFim=" + dataFim
+				+ "]";
+	}
+    
+    
 }

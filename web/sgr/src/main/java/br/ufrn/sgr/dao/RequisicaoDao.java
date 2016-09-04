@@ -1,5 +1,7 @@
 package br.ufrn.sgr.dao;
 
+import java.util.List;
+
 import br.ufrn.sgr.model.Requisicao;
 
 public interface RequisicaoDao {
@@ -9,5 +11,9 @@ public interface RequisicaoDao {
 	void atualizar(Requisicao requisicao);
 
 	Requisicao cancelar(long numeroRequisicao);
+
+	List<Requisicao> listarRequisicoes();
+
+	Requisicao pesquisarPorNumero(long numero);
 
 }
