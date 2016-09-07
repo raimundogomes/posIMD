@@ -42,7 +42,7 @@ public class PesquisarPacienteActivity extends PrincipalActivity implements View
 
     private RequestQueue queue;
        //192.168.0.11
-    final String url = "http://192.168.0.27/sgr/service/paciente/";
+    final String url = "http://192.168.25.30:8080/sgr/service/paciente/";
 
     private ListView listview;
 
@@ -65,16 +65,15 @@ public class PesquisarPacienteActivity extends PrincipalActivity implements View
 
     public boolean camposEstaoPreenchidos(){
         String prontuario =  ((TextView)findViewById(R.id.text_prontuario)).getText().toString();
-        String cpf =  ((TextView)findViewById(R.id.text_cpf)).getText().toString();
         String nome = ((TextView) findViewById(R.id.text_nome_paciente)).getText().toString();
 
-        if( !"".equals(prontuario) || !"".equals(cpf) || !"".equals(nome) ){
+        if( !"".equals(prontuario) || !"".equals(nome) ){
 
             return true;
 
         }
         else{
-            Toast toast = Toast.makeText(this, "Preencha o prontuário, CPF ou nome do paciente!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Preencha o prontuário ou nome do paciente!", Toast.LENGTH_SHORT);
             toast.show();
 
             return false;
@@ -88,11 +87,10 @@ public class PesquisarPacienteActivity extends PrincipalActivity implements View
 
         if(camposEstaoPreenchidos()) {
             String prontuario =  ((TextView)findViewById(R.id.text_prontuario)).getText().toString();
-            String cpf =  ((TextView)findViewById(R.id.text_cpf)).getText().toString();
 
-            if(!"".equals(prontuario) || !"".equals(cpf)){
+            if(!"".equals(prontuario)){
                 Log.d("Teste", "pesquisar por prontuário");
-                pesquisarPaciente(prontuario, cpf, view);
+                pesquisarPaciente(prontuario, view);
             }
             else{
 
@@ -102,13 +100,11 @@ public class PesquisarPacienteActivity extends PrincipalActivity implements View
         }
     }
 
-    private void pesquisarPaciente(String prontuario, String cpf,final View view) {
+    private void pesquisarPaciente(String prontuario, final View view) {
         String urlPaciente = url;
 
         if(!"".equals(prontuario)){
             urlPaciente += "prontuario/"+prontuario;
-        }else{
-            urlPaciente += "cpf/"+cpf;
         }
 
         Log.d("Teste", urlPaciente);
@@ -123,8 +119,8 @@ public class PesquisarPacienteActivity extends PrincipalActivity implements View
                     Paciente paciente = gson.fromJson(response.toString(), Paciente.class);
                     final List<Paciente> list = new ArrayList<Paciente>();
                     list.add(paciente);
-                    final PacienteAdapter adapter = new PacienteAdapter(view.getContext(), list);
-                    listview.setAdapter(adapter);
+
+                montarListaPacientes(list, view);
 
             }
         },new Response.ErrorListener(){
@@ -135,6 +131,20 @@ public class PesquisarPacienteActivity extends PrincipalActivity implements View
         });
 
         queue.add(jsObjRequest);
+    }
+
+    private void montarListaPacientes(List<Paciente> list, View view) {
+        TextView txt_lista_paciente = (TextView) findViewById(R.id.text_selecao_paciente);
+
+        if(list.isEmpty()) {
+            txt_lista_paciente.setText("Nenhum paciente encontrado para os parâmetros informados.");
+        }else{
+            txt_lista_paciente.setText("Selecione um paciente da lista:");
+            txt_lista_paciente.setVisibility(View.VISIBLE);
+        }
+
+        final PacienteAdapter adapter = new PacienteAdapter(view.getContext(), list);
+        listview.setAdapter(adapter);
     }
 
     private void pesquisarPacientesPeloNome(final View view) {
@@ -155,8 +165,7 @@ public class PesquisarPacienteActivity extends PrincipalActivity implements View
                             Log.i("Teste", paciente.getNome());
                             list.add(paciente);
                         }
-                        final PacienteAdapter adapter = new PacienteAdapter(view.getContext(), list);
-                        listview.setAdapter(adapter);
+                        montarListaPacientes(list, view);
 
                     } catch (JSONException e) {
                         e.printStackTrace();

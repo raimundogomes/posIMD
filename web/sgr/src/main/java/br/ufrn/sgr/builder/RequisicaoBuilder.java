@@ -26,7 +26,7 @@ public class RequisicaoBuilder {
     private static Map<Long,Requisicao> requisicoes = new HashMap<Long,Requisicao>();
     
     static{
-    	requisicoes.put( numeroGerador, criarRequisicao());
+    	requisicoes.put(numeroGerador, criarRequisicao());
         requisicoes.put(numeroGerador, criarRequisicao());
         requisicoes.put(numeroGerador, criarRequisicao());
         requisicoes.put(numeroGerador, criarRequisicao());
@@ -39,8 +39,6 @@ public class RequisicaoBuilder {
     public static Map<Long, Requisicao> getRequisicoes() {
 		return requisicoes;
 	}
-
-
 
 
 	public static Requisicao criarRequisicao(){
