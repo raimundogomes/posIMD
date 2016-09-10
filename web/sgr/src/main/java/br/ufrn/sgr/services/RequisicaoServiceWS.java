@@ -16,6 +16,8 @@ import javax.ws.rs.core.Response;
 
 import br.ufrn.sgr.dao.RequisicaoDao;
 import br.ufrn.sgr.dao.impl.RequisicaoDaoImpl;
+import br.ufrn.sgr.exception.PacienteNaoEncontradoException;
+import br.ufrn.sgr.model.Paciente;
 import br.ufrn.sgr.model.Requisicao;
 
 @Path("requisicao") 
@@ -49,10 +51,7 @@ public class RequisicaoServiceWS {
 	@Path("/cancelarRequisicao")
 	@Produces("application/json")
 	public Requisicao cancelar(@FormParam(value = "numeroRequisicao") long numeroRequisicao) {
-		
 		return requisicaoDao.cancelar(numeroRequisicao);
-
-		
 	}
 	
 
@@ -60,8 +59,7 @@ public class RequisicaoServiceWS {
 	@Path("/pesquisarRequisicao")
 	@Produces("text/html; charset=UTF-8")
 	public String pesquisarRequisicao(@DefaultValue("0") @QueryParam("inicio") int inicio,
-			@DefaultValue("10") @QueryParam("limite") int limite)
-	{
+			@DefaultValue("10") @QueryParam("limite") int limite)	{
 		int menorLimite = (requisicaoDao.listarRequisicoes().size()>limite)?limite:requisicaoDao.listarRequisicoes().size();
 		
 		List<Requisicao> lista = requisicaoDao.listarRequisicoes().subList(inicio, menorLimite);
@@ -101,6 +99,13 @@ public class RequisicaoServiceWS {
 		listahtml +=  "</br> Exames:  " + requisicao.getExamesFormatados()+ "</br></br><HR SIZE='2'></hr> "; 
 		
 		return listahtml;
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("listar")
+	public List<Requisicao> listarRequisicoes(){
+		return requisicaoDao.listarRequisicoes();
 	}
 
 	public RequisicaoServiceWS() {

@@ -41,8 +41,6 @@ import java.util.List;
 public class PesquisarPacienteActivity extends PrincipalActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private RequestQueue queue;
-       //192.168.0.11
-    final String url = "http://192.168.25.30:8080/sgr/service/paciente/";
 
     private ListView listview;
 
@@ -101,7 +99,7 @@ public class PesquisarPacienteActivity extends PrincipalActivity implements View
     }
 
     private void pesquisarPaciente(String prontuario, final View view) {
-        String urlPaciente = url;
+        String urlPaciente = Constantes.URL_PACIENTE;
 
         if(!"".equals(prontuario)){
             urlPaciente += "prontuario/"+prontuario;
@@ -150,7 +148,7 @@ public class PesquisarPacienteActivity extends PrincipalActivity implements View
     private void pesquisarPacientesPeloNome(final View view) {
         try {
             String nome = ((TextView) findViewById(R.id.text_nome_paciente)).getText().toString();
-            String urlNome = url + "nome/" + nome;
+            String urlNome = Constantes.URL_PACIENTE + "nome/" + nome;
             JsonArrayRequest jsObjRequest = new JsonArrayRequest(Request.Method.GET, urlNome, null, new Response
                     .Listener<JSONArray>() {
 

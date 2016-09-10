@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.View;
 import android.view.Menu;
@@ -16,19 +17,31 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.imd030.sgr.R;
 import com.imd030.sgr.adapter.RequisicaoAdapter;
 import com.imd030.sgr.builder.RequisicaoBuilder;
 import com.imd030.sgr.comparator.RequisicaoComparator;
 import com.imd030.sgr.entity.Email;
+import com.imd030.sgr.entity.Paciente;
 import com.imd030.sgr.entity.Requisicao;
 import com.imd030.sgr.entity.StatusRequisicao;
 import com.imd030.sgr.utils.Constantes;
 import com.imd030.sgr.utils.DateUtils;
 import com.imd030.sgr.utils.DetectaConexao;
 import com.imd030.sgr.utils.EmailUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +56,8 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
         TextWatcher {
 
     public static final String SUBJECT_EMAIL = "[SGR] - Encaminhamento de Requisição";
+
+    private RequestQueue queue;
 
     private List<Requisicao> requisicoes = new RequisicaoBuilder().gerarRequisicoes();
 
@@ -61,7 +76,11 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
 
         setContentView(R.layout.activity_requisicoes);
 
+        queue = Volley.newRequestQueue(ListaRequisicaoActivity.this);
+
         //listView
+        //requisicoes = obterRequisicoes();
+
         ListView listView = (ListView) findViewById(R.id.list_requisicao);
 
         registerForContextMenu(listView);
