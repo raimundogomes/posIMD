@@ -87,11 +87,11 @@ public class RequisicaoBuilder {
 
 
 
-	public static Requisicao getRequisicao(long numeroRequisicao) {
+	public static Requisicao getRequisicao(long numeroRequisicao) throws Exception {
 		if(requisicoes.containsKey(numeroRequisicao)){
 			return requisicoes.get(numeroRequisicao);
 		}
-		//TODO Lançar exceção de requisição não encontrada.
-		return new Requisicao();
+		
+		throw new Exception("Requisição não encontrada");
 	}
 }

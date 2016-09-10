@@ -24,7 +24,7 @@ public class RequisicaoDaoImpl implements RequisicaoDao {
 	}
 
 	@Override
-	public Requisicao cancelar(long numeroRequisicao) {
+	public Requisicao cancelar(long numeroRequisicao) throws Exception {
 		Requisicao requisicao = RequisicaoBuilder.getRequisicao(numeroRequisicao);
 		requisicao.setStatus(StatusRequisicao.CANCELADA);
 		return requisicao;
@@ -36,7 +36,7 @@ public class RequisicaoDaoImpl implements RequisicaoDao {
 	}
 
 	@Override
-	public Requisicao pesquisarPorNumero(long numero) {
+	public Requisicao pesquisarPorNumero(long numero) throws Exception {
 		
 		return RequisicaoBuilder.getRequisicao(numero);
 	}

@@ -57,7 +57,7 @@ public class PacienteServiceWS {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response inserirPaciente(Paciente paciente) {
 
-		return Response.status(201).entity(paciente.toString()).build();
+		return Response.status(304).entity(paciente.toString()).build();
 		
 	}
 

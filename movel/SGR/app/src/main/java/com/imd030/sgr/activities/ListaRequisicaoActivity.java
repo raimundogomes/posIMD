@@ -25,8 +25,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.imd030.sgr.R;
 import com.imd030.sgr.adapter.RequisicaoAdapter;
 import com.imd030.sgr.builder.RequisicaoBuilder;
@@ -42,6 +44,7 @@ import com.imd030.sgr.utils.EmailUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -332,9 +335,50 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        requisicaoSelecionada.setStatus(StatusRequisicao.CANCELADA);
-        requisicaoAdapter.notifyDataSetChanged();
-        requisicaoSelecionada = null;
+
+
+        //realizar o cancelamento da requisição pelo serviço
+        cancelarRequisicaoServico(requisicaoSelecionada.getNumero());
+
+    }
+
+    private void cancelarRequisicaoServico(long numeroRequisicao) {
+
+        String url = Constantes.URL_REQUISICAO + "cancelarRequisicao";
+
+        final JSONObject jsonBody;
+        try {
+            jsonBody = new JSONObject("{\"numeroRequisicao\":\"" + numeroRequisicao +  "\"}");
+
+            Log.d("Teste", jsonBody.get("numeroRequisicao").toString());
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, jsonBody, new Response
+                .Listener<JSONObject>(){
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("Teste", response.toString());
+                requisicaoSelecionada.setStatus(StatusRequisicao.CANCELADA);
+                requisicaoAdapter.notifyDataSetChanged();
+                requisicaoSelecionada = null;
+                Toast.makeText(getApplicationContext(),
+                        "Requisição cancelada com sucesso.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Teste", error.toString());
+                Toast.makeText(getApplicationContext(),
+                        "Não foi possível estabelecer conexaão para cancelar a requisição.",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        queue.add(jsObjRequest);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

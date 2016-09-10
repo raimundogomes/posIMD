@@ -1,5 +1,6 @@
 package br.ufrn.sgr.services;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -13,6 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.google.gson.JsonObject;
 
 import br.ufrn.sgr.dao.RequisicaoDao;
 import br.ufrn.sgr.dao.impl.RequisicaoDaoImpl;
@@ -50,8 +53,14 @@ public class RequisicaoServiceWS {
 	@POST
 	@Path("/cancelarRequisicao")
 	@Produces("application/json")
-	public Requisicao cancelar(@FormParam(value = "numeroRequisicao") long numeroRequisicao) {
-		return requisicaoDao.cancelar(numeroRequisicao);
+	public Requisicao cancelar(RequisicaoIdTO requisicaoIdTO){
+		try {
+			return requisicaoDao.cancelar(requisicaoIdTO.getNumeroRequisicao());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new Requisicao();
+		}
 	}
 	
 
@@ -81,7 +90,7 @@ public class RequisicaoServiceWS {
 	@GET
 	@Path("/pesquisarRequisicao/numero/{numero}")
 	@Produces("text/html; charset=UTF-8")
-	public String pesquisarRequisicao(@DefaultValue("0") @PathParam("numero") long numero)
+	public String pesquisarRequisicao(@DefaultValue("0") @PathParam("numero") long numero) throws Exception
 	{
 		Requisicao requisicao = requisicaoDao.pesquisarPorNumero(numero);
 		

@@ -10,10 +10,10 @@ public interface RequisicaoDao {
 
 	void atualizar(Requisicao requisicao);
 
-	Requisicao cancelar(long numeroRequisicao);
+	Requisicao cancelar(long numeroRequisicao) throws Exception;
 
 	List<Requisicao> listarRequisicoes();
 
-	Requisicao pesquisarPorNumero(long numero);
+	Requisicao pesquisarPorNumero(long numero) throws Exception;
 
 }
