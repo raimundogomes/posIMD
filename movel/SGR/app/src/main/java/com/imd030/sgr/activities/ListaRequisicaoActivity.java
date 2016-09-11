@@ -369,7 +369,7 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
             public void onErrorResponse(VolleyError error) {
                 Log.d("Teste", error.toString());
                 Toast.makeText(getApplicationContext(),
-                        "Não foi possível estabelecer conexaão para cancelar a requisição.",
+                        "Não foi possível estabelecer conexão para cancelar a requisição.",
                         Toast.LENGTH_LONG).show();
             }
         });

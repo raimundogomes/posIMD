@@ -25,9 +25,9 @@ public final class Constantes {
 
     public static final String PREF_NAME = "LoginActivityPreferences";
 
-    public static final String URL_PACIENTE = "http://10.50.19.103/sgr/service/paciente/";
-    public static final String URL_REQUISICAO = "http://10.50.19.103/sgr/service/requisicao/";
+    //public static final String URL_PACIENTE = "http://10.50.19.103/sgr/service/paciente/";
+    //public static final String URL_REQUISICAO = "http://10.50.19.103/sgr/service/requisicao/";
 
-    //public static final String URL_PACIENTE = "http://192.168.25.30:8080/sgr/service/paciente/";
-    //public static final String URL_REQUISICAO = "http://192.168.25.30:8080/sgr/service/requisicao/";
+    public static final String URL_PACIENTE = "http://192.168.25.30:8080/sgr/service/paciente/";
+    public static final String URL_REQUISICAO = "http://192.168.25.30:8080/sgr/service/requisicao/";
 }

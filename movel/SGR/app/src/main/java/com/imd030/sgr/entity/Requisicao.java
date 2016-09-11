@@ -47,7 +47,7 @@ public class Requisicao implements Serializable {
         this.status = status;
         this.numero = numero++;
     }
-
+    
     public Date getDataRequisicao() {
         return dataRequisicao;
     }
@@ -111,4 +111,5 @@ public class Requisicao implements Serializable {
     public String getExamesFormatados(){
         return exames.toString();
     }
+
 }

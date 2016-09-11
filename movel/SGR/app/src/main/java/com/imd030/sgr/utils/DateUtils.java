@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 public class DateUtils {
 
     private static String[] meses = {"janeiro", "fevereiro", "março", "abril", "maio", "junho",
-            "julho", "agosto", "stembro", "outubro", "novembro", "dezembro"};
+            "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"};
 
     public static String obterDataPorExtenso(Date data){
         Calendar calendar = GregorianCalendar.getInstance();
@@ -36,4 +36,8 @@ public class DateUtils {
         return calendar.getTime();
     }
 
+    public static String obterDataServico(Date data){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(data);
+    }
 }

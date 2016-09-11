@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * Created by thiago on 28/05/16.
  */
@@ -32,11 +35,6 @@ public class Requisicao implements Serializable {
 
     private Date dataFim;
 
-
-    public Requisicao() {
-        
-    }
-
     public List<Exame> getExames() {
         return exames;
     }
@@ -44,7 +42,9 @@ public class Requisicao implements Serializable {
     public void setExames(List<Exame> exames) {
         this.exames = exames;
     }
-
+    
+    public Requisicao(){}
+    
     public Requisicao(Date dataRequisicao, Solicitante solicitante, Paciente paciente, StatusRequisicao status) {
         this.dataRequisicao = dataRequisicao;
         this.solicitante = solicitante;

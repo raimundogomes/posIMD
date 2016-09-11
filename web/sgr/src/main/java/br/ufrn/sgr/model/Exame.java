@@ -20,6 +20,13 @@ public class Exame implements Serializable{
     private ResultadoExame resultadoExame = ResultadoExame.ANALISE_NAO_REALIZADA;
 
     private String resultadoCompleto ;
+    
+    public Exame(){}
+    
+    public Exame(TipoExame tipo) {
+    	tipoExame = tipo;
+    	amostra = new Amostra();
+    }    
 
     public String getResultadoCompleto() {
         return resultadoCompleto;
@@ -37,10 +44,6 @@ public class Exame implements Serializable{
         this.resultadoExame = resultadoExame;
     }
 
-    public Exame(TipoExame tipo) {
-        tipoExame = tipo;
-        amostra = new Amostra();
-    }
 
 
     @Override
@@ -85,5 +88,13 @@ public class Exame implements Serializable{
         return resultadoExame.getDescricao();
 
     }
+
+	public TipoExame getTipoExame() {
+		return tipoExame;
+	}
+
+	public void setTipoExame(TipoExame tipoExame) {
+		this.tipoExame = tipoExame;
+	}
 
 }

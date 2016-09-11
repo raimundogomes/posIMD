@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.imd030.sgr.R;
 import com.imd030.sgr.builder.PacienteBuilder;
 import com.imd030.sgr.entity.Amostra;
@@ -24,10 +33,15 @@ import com.imd030.sgr.entity.Exame;
 import com.imd030.sgr.entity.Laboratorio;
 import com.imd030.sgr.entity.Paciente;
 import com.imd030.sgr.entity.Requisicao;
+import com.imd030.sgr.entity.Solicitante;
 import com.imd030.sgr.entity.StatusRequisicao;
 import com.imd030.sgr.entity.TipoExame;
+import com.imd030.sgr.entity.TipoSolicitante;
 import com.imd030.sgr.utils.Constantes;
 import com.imd030.sgr.utils.DateUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +60,7 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
     private static final String EDIT_SANGUE = "Sangue";
     private static final String EDIT_URINA = "Urina";
     private static final String LABORATRIO = "Laboratorio";
+    private RequestQueue queue;
 
     Laboratorio laboratorio1 = new Laboratorio("Microbiologia", "84987879798");
     Laboratorio laboratorio2 = new Laboratorio("Citologia", "22222222222");
@@ -80,6 +95,8 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nova_requisicao);
+
+        queue = Volley.newRequestQueue(NovaRequisicaoActivity.this);
 
         //paciente
         Intent intent = getIntent();
@@ -174,11 +191,45 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
         return requisicao.getPaciente() != null && requisicao.getLaboratorio()!= null;
     }
 
-    private void salvarRequisicao(Requisicao requisicao) {
-        Intent result = new Intent();
-        result.putExtra(Constantes.REQUISICAO_NOVA_ACTIVITY, requisicao);
-        setResult(RESULT_OK, result);
-        finish();
+    private void salvarRequisicao(final Requisicao requisicao) {
+        String url = Constantes.URL_REQUISICAO + "inserirRequisicao";
+
+        final JSONObject jsonBody;
+        try {
+
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            String jsonInString = gson.toJson(requisicao);
+            Log.d("Teste", jsonInString);
+
+            //jsonBody = new JSONObject("{\"requisicao\":\"" + jsonInString +  "\"}");
+            jsonBody = new JSONObject(jsonInString);
+
+
+            JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, jsonBody, new Response
+                    .Listener<JSONObject>(){
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.d("Teste", response.toString());
+                    Intent result = new Intent();
+                    result.putExtra(Constantes.REQUISICAO_NOVA_ACTIVITY, requisicao);
+                    setResult(RESULT_OK, result);
+                    finish();
+                }
+            },new Response.ErrorListener(){
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("Teste", error.toString());
+                    Toast.makeText(getApplicationContext(),
+                            "Não foi possível estabelecer conexão para inserir a requisição.",
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+
+            queue.add(jsObjRequest);
+
+        } catch (JSONException e) {
+            Log.d("Teste", e.toString());;
+        }
     }
 
     private Requisicao montarRequisicao() {

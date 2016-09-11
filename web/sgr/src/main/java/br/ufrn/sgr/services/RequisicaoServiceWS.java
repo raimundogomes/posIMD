@@ -30,12 +30,12 @@ public class RequisicaoServiceWS {
 	
 	@POST
 	@Path("/inserirRequisicao")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response inserir(Requisicao requisicao) {
+	@Produces("application/json")
+	public Requisicao inserir(Requisicao requisicao) {
 		
 		requisicaoDao.inserir(requisicao);
 
-		return Response.status(201).entity(requisicao.toString()).build();
+		return requisicao;
 		
 	}
 	
@@ -53,14 +53,8 @@ public class RequisicaoServiceWS {
 	@POST
 	@Path("/cancelarRequisicao")
 	@Produces("application/json")
-	public Requisicao cancelar(RequisicaoIdTO requisicaoIdTO){
-		try {
-			return requisicaoDao.cancelar(requisicaoIdTO.getNumeroRequisicao());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return new Requisicao();
-		}
+	public Requisicao cancelar(RequisicaoIdTO requisicaoIdTO) throws Exception{
+		return requisicaoDao.cancelar(requisicaoIdTO.getNumeroRequisicao());
 	}
 	
 

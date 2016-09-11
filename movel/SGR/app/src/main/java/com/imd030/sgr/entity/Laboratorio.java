@@ -11,6 +11,8 @@ public class Laboratorio implements Serializable{
 
     private String telefone;
 
+    public Laboratorio(){}
+
     public Laboratorio(String nome, String telefone) {
         this.nome = nome;
         this.telefone = telefone;

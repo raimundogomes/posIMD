@@ -32,6 +32,8 @@ public class Exame implements Serializable{
         this.resultadoExame = resultadoExame;
     }
 
+    public Exame(){}
+
     public Exame(TipoExame tipo) {
         tipoExame = tipo;
         amostra = new Amostra();
@@ -81,4 +83,11 @@ public class Exame implements Serializable{
 
     }
 
+    public TipoExame getTipoExame() {
+        return tipoExame;
+    }
+
+    public void setTipoExame(TipoExame tipoExame) {
+        this.tipoExame = tipoExame;
+    }
 }
