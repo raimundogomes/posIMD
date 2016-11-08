@@ -23,7 +23,7 @@ public class Requisicao implements Serializable {
 
     private Long id;
 
-    private long numero = 1;
+    private Long numero;
 
     private Laboratorio laboratorio;
 
@@ -33,7 +33,7 @@ public class Requisicao implements Serializable {
 
 
     public Requisicao() {
-        numero++;
+        
     }
 
     public List<Exame> getExames() {

@@ -34,7 +34,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.imd030.sgr.R;
 import com.imd030.sgr.adapter.RequisicaoAdapter;
-import com.imd030.sgr.builder.RequisicaoBuilder;
 import com.imd030.sgr.comparator.RequisicaoComparator;
 import com.imd030.sgr.entity.Email;
 import com.imd030.sgr.entity.Paciente;
@@ -65,7 +64,7 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
 
     private RequestQueue queue;
 
-    private List<Requisicao> requisicoes;
+    private List<Requisicao> requisicoes = new ArrayList<Requisicao>();
 
 
     private List<Requisicao> requisicoesfiltradas;
@@ -85,7 +84,6 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
 
         setContentView(R.layout.activity_requisicoes);
 
-        requisicoes = new RequisicaoBuilder().gerarRequisicoes(this);
 
         queue = Volley.newRequestQueue(ListaRequisicaoActivity.this);
 

@@ -1,11 +1,9 @@
 package br.ufrn.sgr.services;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -15,12 +13,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.google.gson.JsonObject;
-
 import br.ufrn.sgr.dao.RequisicaoDao;
 import br.ufrn.sgr.dao.impl.RequisicaoDaoImpl;
-import br.ufrn.sgr.exception.PacienteNaoEncontradoException;
-import br.ufrn.sgr.model.Paciente;
 import br.ufrn.sgr.model.Requisicao;
 
 @Path("requisicao") 
@@ -33,10 +27,8 @@ public class RequisicaoServiceWS {
 	@Produces("application/json")
 	public Requisicao inserir(Requisicao requisicao) {
 		
-		requisicaoDao.inserir(requisicao);
+		return requisicaoDao.inserir(requisicao);
 
-		return requisicao;
-		
 	}
 	
 	@POST
@@ -59,7 +51,7 @@ public class RequisicaoServiceWS {
 	
 
 	@GET
-	@Path("/pesquisarRequisicao")
+	@Path("/pesquisarRequisicaoPaginada")
 	@Produces("text/html; charset=UTF-8")
 	public String pesquisarRequisicao(@DefaultValue("0") @QueryParam("inicio") int inicio,
 			@DefaultValue("10") @QueryParam("limite") int limite)	{
@@ -72,7 +64,6 @@ public class RequisicaoServiceWS {
 		for (Requisicao requisicao : lista) {
 			listahtml += "</br> Número: " + requisicao.getNumeroFormatado() + "</br> "; 
 			listahtml +=  "</br> Data da requisição: " + requisicao.getDataRequisicao() + "</br> ";
-			listahtml +=  "</br> Data da requisição: " + requisicao.getDataFim() + "</br> ";
 			listahtml +=  "</br> " + requisicao.getPaciente() + "</br> "; 
 			listahtml +=  "</br> Laboratório: " + requisicao.getLaboratorio() + "</br> ";
 			listahtml +=  "</br> Exames:  " + requisicao.getExamesFormatados()+ "</br></br><HR SIZE='2'></hr> "; 
@@ -96,7 +87,6 @@ public class RequisicaoServiceWS {
 		
 		listahtml += "</br> Número: " + requisicao.getNumeroFormatado() + "</br> "; 
 		listahtml +=  "</br> Data da requisição: " + requisicao.getDataRequisicao() + "</br> ";
-		listahtml +=  "</br> Data da requisição: " + requisicao.getDataFim() + "</br> ";
 		listahtml +=  "</br> " + requisicao.getPaciente() + "</br> "; 
 		listahtml +=  "</br> Laboratório: " + requisicao.getLaboratorio() + "</br> ";
 		listahtml +=  "</br> Exames:  " + requisicao.getExamesFormatados()+ "</br></br><HR SIZE='2'></hr> "; 

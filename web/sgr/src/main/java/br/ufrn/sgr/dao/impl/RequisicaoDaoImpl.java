@@ -11,9 +11,12 @@ import br.ufrn.sgr.model.StatusRequisicao;
 public class RequisicaoDaoImpl implements RequisicaoDao {
 
 	@Override
-	public void inserir(Requisicao requisicao) {
-		
+	public Requisicao inserir(Requisicao requisicao) {
+		requisicao.setNumero(RequisicaoBuilder.getNumeroGerador());
 		RequisicaoBuilder.getRequisicoes().put(RequisicaoBuilder.getNumeroGerador(), requisicao);
+		RequisicaoBuilder.incrementarNumeroGerador();
+		
+		return requisicao;
 
 	}
 

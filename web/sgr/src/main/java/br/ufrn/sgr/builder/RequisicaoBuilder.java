@@ -16,9 +16,13 @@ import br.ufrn.sgr.model.StatusRequisicao;
 public class RequisicaoBuilder {
 
     public static long getNumeroGerador() {
-    	numeroGerador++;
+    	
 		return numeroGerador;
 	}
+    
+    public static void incrementarNumeroGerador(){
+    	numeroGerador++;
+    }
 
 
 	private static long numeroGerador = 1;
@@ -26,14 +30,14 @@ public class RequisicaoBuilder {
     private static Map<Long,Requisicao> requisicoes = new HashMap<Long,Requisicao>();
     
     static{
-    	requisicoes.put(numeroGerador, criarRequisicao());
-        requisicoes.put(numeroGerador, criarRequisicao());
-        requisicoes.put(numeroGerador, criarRequisicao());
-        requisicoes.put(numeroGerador, criarRequisicao());
-        requisicoes.put(numeroGerador, criarRequisicao());
-        requisicoes.put(numeroGerador, criarRequisicao());
-        requisicoes.put(numeroGerador, criarRequisicao());
-        requisicoes.put(numeroGerador, criarRequisicao());
+//    	requisicoes.put(numeroGerador, criarRequisicao());
+//        requisicoes.put(numeroGerador, criarRequisicao());
+//        requisicoes.put(numeroGerador, criarRequisicao());
+//        requisicoes.put(numeroGerador, criarRequisicao());
+//        requisicoes.put(numeroGerador, criarRequisicao());
+//        requisicoes.put(numeroGerador, criarRequisicao());
+//        requisicoes.put(numeroGerador, criarRequisicao());
+//        requisicoes.put(numeroGerador, criarRequisicao());
     }
 
     public static Map<Long, Requisicao> getRequisicoes() {

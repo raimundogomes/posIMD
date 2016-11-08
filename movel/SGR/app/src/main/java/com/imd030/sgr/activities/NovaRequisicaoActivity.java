@@ -197,7 +197,7 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
         final JSONObject jsonBody;
         try {
 
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
             String jsonInString = gson.toJson(requisicao);
             Log.d("Teste", jsonInString);
 
@@ -210,6 +210,17 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
                 @Override
                 public void onResponse(JSONObject response) {
                     Log.d("Teste", response.toString());
+
+                   try {
+                       Long numeroRequisicao = response.getLong("numero");
+
+                       requisicao.setNumero(numeroRequisicao);
+
+                    } catch (JSONException e) {// refatorar codigo. Lancar e tratar exceção.
+                       e.printStackTrace();
+                        Log.d("Teste", e.getMessage());
+                    }
+
                     Intent result = new Intent();
                     result.putExtra(Constantes.REQUISICAO_NOVA_ACTIVITY, requisicao);
                     setResult(RESULT_OK, result);
