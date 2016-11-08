@@ -19,6 +19,15 @@
             <TextView  android:id="@+id/text_paciente"/>
         </TableRow>
 
+        <TableRow  android:layout_marginTop="10dp">
+            <TextView android:id="@+id/label_nomeMae" android:text="Nome da mãe" android:textStyle="bold"/>
+
+        </TableRow>
+
+        <TableRow>
+            <TextView  android:id="@+id/text_nomeMae"/>
+        </TableRow>
+
         <TableRow android:layout_marginTop="10dp">
             <TextView android:layout_gravity="left" android:text="Prontuário " android:textStyle="bold"/>
             <TextView android:text="CNS" android:gravity="left" android:textStyle="bold"/>

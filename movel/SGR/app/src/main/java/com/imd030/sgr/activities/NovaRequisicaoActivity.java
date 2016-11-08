@@ -62,8 +62,8 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
     private static final String LABORATRIO = "Laboratorio";
     private RequestQueue queue;
 
-    Laboratorio laboratorio1 = new Laboratorio("Microbiologia", "84987879798");
-    Laboratorio laboratorio2 = new Laboratorio("Citologia", "22222222222");
+    Laboratorio laboratorio1 = Laboratorio.CITOLOGIA;
+    Laboratorio laboratorio2 = Laboratorio.MICROBIOLOGIA;
 
     private List<Laboratorio> listLaboratorio = new ArrayList<Laboratorio>();
 

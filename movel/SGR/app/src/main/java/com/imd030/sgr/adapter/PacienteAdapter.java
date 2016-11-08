@@ -46,7 +46,7 @@ public class PacienteAdapter extends ArrayAdapter<Paciente> {
         textViewNome.setText(paciente.getNome());
 
         //nome da mãe
-        TextView textViewNomeMae = (TextView) view.findViewById(R.id.text_mae);
+        TextView textViewNomeMae = (TextView) view.findViewById(R.id.text_nomeMae);
         textViewNomeMae.setText(paciente.getNomeMae());
 
         //data de nascimento

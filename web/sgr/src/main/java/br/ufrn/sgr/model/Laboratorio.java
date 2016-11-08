@@ -1,21 +1,19 @@
 package br.ufrn.sgr.model;
 
-import java.io.Serializable;
+public enum Laboratorio {
 
-public class Laboratorio implements Serializable{
+    MICROBIOLOGIA (0, "Microbiologia", "84 32758431"),
+    CITOLOGIA (1, "Citologia", "84 32758431");
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private int id;
 
-	private String nome;
+    private String nome;
 
     private String telefone;
-    
-    public Laboratorio(){}
-    
-    public Laboratorio(String nome, String telefone) {
+
+   Laboratorio(int id, String nome, String telefone) {
+
+        this.id = id;
         this.nome = nome;
         this.telefone = telefone;
     }
@@ -36,8 +34,27 @@ public class Laboratorio implements Serializable{
         this.telefone = telefone;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return nome;
+    }
+
+    public static Laboratorio getLaboratorioById(int codigo){
+
+        for (Laboratorio laboratorio: Laboratorio.values()){
+            if(laboratorio.id== codigo){
+                return laboratorio;
+            }
+        }
+
+        return null;
     }
 }

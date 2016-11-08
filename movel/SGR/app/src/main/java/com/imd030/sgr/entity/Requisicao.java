@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class Requisicao implements Serializable {
 
+    public static String[] COLUNAS = new String[]{"ID", "NUMERO", "DATA_REQUISICAO, ID_SITUACAO, ID_LABORATORIO, ID_PACIENTE"};
+
     private static final String FORMATO_NUMERO = "%08d";
 
     private Date dataRequisicao;
@@ -18,6 +20,8 @@ public class Requisicao implements Serializable {
     private Paciente paciente;
 
     private StatusRequisicao status;
+
+    private Long id;
 
     private long numero = 1;
 
@@ -112,4 +116,31 @@ public class Requisicao implements Serializable {
         return exames.toString();
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Requisicao{" +
+                "dataRequisicao=" + dataRequisicao +
+                ", solicitante=" + solicitante +
+                ", paciente=" + paciente +
+                ", status=" + status +
+                ", id=" + id +
+                ", numero=" + numero +
+                ", laboratorio=" + laboratorio +
+                ", exames=" + exames +
+                ", dataFim=" + dataFim +
+                '}';
+    }
+
+    public void setSituacao(int situacao) {
+
+        this.setStatus(StatusRequisicao.getStatusRequisicaoByCodigo(situacao));
+    }
 }

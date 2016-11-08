@@ -5,6 +5,8 @@ import java.io.Serializable;
 
 public class Paciente  implements Serializable {
 
+    private Long id;
+
     private Long prontuario;
 
     private String nome;
@@ -54,21 +56,6 @@ public class Paciente  implements Serializable {
         this.nome = nome;
         this.cpf = cpf;
         this.cns = cns;
-    }
-
-    /**
-     * Construtor
-     * @param cns carteira nacional de saúde - cns.
-     * @param nome Nome do Paciente.
-     * @param prontuario Número do paciente.
-     * @param email e-mail paciente.
-     */
-    public Paciente(String cns, String nome, long prontuario, String email, String telefone) {
-        this.cns = cns;
-        this.nome = nome;
-        this.prontuario = prontuario;
-        this.email = email;
-        this.telefone = telefone;
     }
 
     public Paciente(){
@@ -130,5 +117,11 @@ public class Paciente  implements Serializable {
     }
 
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

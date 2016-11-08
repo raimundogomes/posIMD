@@ -73,9 +73,7 @@ public class RequisicaoBuilder {
 			e.printStackTrace();
 		}
 
-        Laboratorio laboratorio = new Laboratorio("Microbiologia", "84987654322");
-
-        requisicao.setLaboratorio(laboratorio);
+        requisicao.setLaboratorio(Laboratorio.MICROBIOLOGIA);
 
         Solicitante solicitante = new Solicitante();
         solicitante.setNome("Solicitante 1");

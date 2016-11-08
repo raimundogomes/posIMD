@@ -1,6 +1,8 @@
 package br.ufrn.sgr.model;
 
 public class Paciente {
+	
+    private Long id;
 
 	private Long prontuario;
 	

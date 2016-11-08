@@ -12,110 +12,127 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
  */
 public class Requisicao implements Serializable {
 
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	private static final String FORMATO_NUMERO = "%08d";
 
-    private Date dataRequisicao;
+	private Date dataRequisicao;
 
-    private Solicitante solicitante;
+	private Solicitante solicitante;
 
-    private Paciente paciente;
+	private Paciente paciente;
 
-    private StatusRequisicao status;
+	private StatusRequisicao status;
 
-    private long numero = 1;
+	private Long id;
 
-    private Laboratorio laboratorio;
+	private long numero = 1;
 
-    private List<Exame> exames;
+	private Laboratorio laboratorio;
 
-    private Date dataFim;
+	private List<Exame> exames;
 
-    public List<Exame> getExames() {
-        return exames;
-    }
+	private Date dataFim;
 
-    public void setExames(List<Exame> exames) {
-        this.exames = exames;
-    }
-    
-    public Requisicao(){}
-    
-    public Requisicao(Date dataRequisicao, Solicitante solicitante, Paciente paciente, StatusRequisicao status) {
-        this.dataRequisicao = dataRequisicao;
-        this.solicitante = solicitante;
-        this.paciente = paciente;
-        this.status = status;
-        this.numero = numero++;
-    }
+	public Requisicao() {
+		numero++;
+	}
 
-    public Date getDataRequisicao() {
-        return dataRequisicao;
-    }
+	public List<Exame> getExames() {
+		return exames;
+	}
 
-    public void setDataRequisicao(Date dataRequisicao) {
-        this.dataRequisicao = dataRequisicao;
-    }
+	public void setExames(List<Exame> exames) {
+		this.exames = exames;
+	}
 
-    public Solicitante getSolicitante() {
-        return solicitante;
-    }
+	public Requisicao(Date dataRequisicao, Solicitante solicitante, Paciente paciente, StatusRequisicao status) {
+		this.dataRequisicao = dataRequisicao;
+		this.solicitante = solicitante;
+		this.paciente = paciente;
+		this.status = status;
+		this.numero = numero++;
+	}
 
-    public void setSolicitante(Solicitante solicitante) {
-        this.solicitante = solicitante;
-    }
+	public Date getDataRequisicao() {
+		return dataRequisicao;
+	}
 
-    public Paciente getPaciente() {
-        return paciente;
-    }
+	public void setDataRequisicao(Date dataRequisicao) {
+		this.dataRequisicao = dataRequisicao;
+	}
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
+	public Solicitante getSolicitante() {
+		return solicitante;
+	}
 
-    public StatusRequisicao getStatus() {
-        return status;
-    }
+	public void setSolicitante(Solicitante solicitante) {
+		this.solicitante = solicitante;
+	}
 
-    public void setStatus(StatusRequisicao status) {
-        this.status = status;
-    }
+	public Paciente getPaciente() {
+		return paciente;
+	}
 
-    public long getNumero() {
-        return numero;
-    }
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
 
-    public void setNumero(long numero) {
-        this.numero = numero;
-    }
+	public StatusRequisicao getStatus() {
+		return status;
+	}
 
-    public Date getDataFim() {
-        return dataFim;
-    }
+	public void setStatus(StatusRequisicao status) {
+		this.status = status;
+	}
 
-    public void setDataFim(Date dataFim) {
-        this.dataFim = dataFim;
-    }
+	public long getNumero() {
+		return numero;
+	}
 
-    public Laboratorio getLaboratorio() {
-        return laboratorio;
-    }
+	public void setNumero(long numero) {
+		this.numero = numero;
+	}
 
-    public void setLaboratorio(Laboratorio laboratorio) {
-        this.laboratorio = laboratorio;
-    }
+	public Date getDataFim() {
+		return dataFim;
+	}
 
-    public String getNumeroFormatado() {
-        return String.format(FORMATO_NUMERO, this.numero);
-    }
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
+	}
 
-    public String getExamesFormatados(){
-        return exames.toString();
-    }
+	public Laboratorio getLaboratorio() {
+		return laboratorio;
+	}
+
+	public void setLaboratorio(Laboratorio laboratorio) {
+		this.laboratorio = laboratorio;
+	}
+
+	public String getNumeroFormatado() {
+		return String.format(FORMATO_NUMERO, this.numero);
+	}
+
+	public String getExamesFormatados() {
+		return exames.toString();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setSituacao(int situacao) {
+
+		this.setStatus(StatusRequisicao.getStatusRequisicaoByCodigo(situacao));
+	}
 
 	@Override
 	public String toString() {
@@ -123,6 +140,5 @@ public class Requisicao implements Serializable {
 				+ ", numero=" + numero + ", laboratorio=" + laboratorio + ", exames=" + exames + ", dataFim=" + dataFim
 				+ "]";
 	}
-    
-    
+
 }

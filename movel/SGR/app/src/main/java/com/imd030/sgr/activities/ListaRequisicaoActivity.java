@@ -3,8 +3,11 @@ package com.imd030.sgr.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -62,9 +65,12 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
 
     private RequestQueue queue;
 
-    private List<Requisicao> requisicoes = new RequisicaoBuilder().gerarRequisicoes();
+    private List<Requisicao> requisicoes;
+
 
     private List<Requisicao> requisicoesfiltradas;
+
+    private BroadcastReceiver receiver;
 
     private Requisicao requisicaoSelecionada = null;
 
@@ -78,6 +84,8 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_requisicoes);
+
+        requisicoes = new RequisicaoBuilder().gerarRequisicoes(this);
 
         queue = Volley.newRequestQueue(ListaRequisicaoActivity.this);
 
@@ -109,6 +117,23 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
 
         editSearch.addTextChangedListener(this);
 
+        verificaConectividade();
+
+    }
+
+    private void verificaConectividade() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(android.net.ConnectivityManager.CONNECTIVITY_ACTION);
+
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+              //  intent.
+                Toast toast = Toast.makeText(context, "conexao mudou!",     Toast.LENGTH_LONG);
+                toast.show();
+            }
+        };
+        registerReceiver(receiver, filter);
     }
 
     @Override
@@ -128,16 +153,7 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
                 finish();
                 break;
             case R.id.menu_sincronizar:
-                DetectaConexao detectaConexao = new DetectaConexao(getApplicationContext());
-                if(detectaConexao.existeConexao()){
-                    sicronizarRequisicoes(requisicoes);
-                    exibirMensagemSicronizacao();
-                }
-                else{
-                    Toast toast = Toast.makeText(this, DetectaConexao.FALHA_CONEXAO,
-                            Toast.LENGTH_LONG);
-                    toast.show();
-                }
+                sicronizarRequisicoes(requisicoes);
                 break;
             case R.id.menu_configuracoes:
                 abrirConfiguracoes();
@@ -209,17 +225,28 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
     }
 
     private void sicronizarRequisicoes(List<Requisicao> requisicoes) {
-        final Random myRandom = new Random();
 
-        int num = myRandom.nextInt(requisicoes.size()-1);
-        Requisicao requisicao =  requisicoes.get(num);
+        DetectaConexao detectaConexao = new DetectaConexao(getApplicationContext());
+        if(detectaConexao.existeConexao()){
+            final Random myRandom = new Random();
+
+            int num = myRandom.nextInt(requisicoes.size()-1);
+            Requisicao requisicao =  requisicoes.get(num);
 
 
-        if(requisicao.getStatus()==StatusRequisicao.SOLICITADA){
-            requisicao.setStatus(StatusRequisicao.CANCELADA);
+            if(requisicao.getStatus()==StatusRequisicao.SOLICITADA){
+                requisicao.setStatus(StatusRequisicao.CANCELADA);
+            }
+
+            Collections.sort(requisicoesfiltradas, new RequisicaoComparator(criterioOrdenacaoSelecionado));
+            exibirMensagemSicronizacao();
+        }
+        else{
+            Toast toast = Toast.makeText(this, DetectaConexao.FALHA_CONEXAO,
+                    Toast.LENGTH_LONG);
+            toast.show();
         }
 
-        Collections.sort(requisicoesfiltradas, new RequisicaoComparator(criterioOrdenacaoSelecionado));
     }
 
     @Override
@@ -411,7 +438,26 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
         //Intent intent = new Intent(this, NovaRequisicaoActivity.class);
         //startActivityForResult(intent, Constantes.INDICE_ACTIVITY_NOVA_REQUISICAO);
 
-        Intent intent = new Intent(this, PesquisarPacienteActivity.class);
-        startActivityForResult(intent, Constantes.INDICE_ACTIVITY_NOVA_REQUISICAO);
+        DetectaConexao detectaConexao = new DetectaConexao(getApplicationContext());
+        if(detectaConexao.existeConexao()){
+            Intent intent = new Intent(this, PesquisarPacienteActivity.class);
+            startActivityForResult(intent, Constantes.INDICE_ACTIVITY_NOVA_REQUISICAO);
+        }
+        else{
+            Toast toast = Toast.makeText(this, DetectaConexao.FALHA_CONEXAO,
+                    Toast.LENGTH_LONG);
+            toast.show();
+        }
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (receiver != null) {
+            unregisterReceiver(receiver);
+            receiver = null;
+        }
+        super.onDestroy();
     }
 }

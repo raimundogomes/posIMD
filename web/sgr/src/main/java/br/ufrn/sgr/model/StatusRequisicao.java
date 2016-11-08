@@ -34,4 +34,15 @@ public enum StatusRequisicao {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+    
+    public static StatusRequisicao getStatusRequisicaoByCodigo(int codigo){
+
+        for (StatusRequisicao status: StatusRequisicao.values()){
+            if(status.codigo== codigo){
+                return status;
+            }
+        }
+
+        return SOLICITADA;
+    }
 }

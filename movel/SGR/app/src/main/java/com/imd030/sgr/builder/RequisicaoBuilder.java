@@ -1,5 +1,9 @@
 package com.imd030.sgr.builder;
 
+import android.content.Context;
+import android.util.Log;
+
+import com.imd030.sgr.dao.RequisicaoDao;
 import com.imd030.sgr.entity.Laboratorio;
 import com.imd030.sgr.entity.Paciente;
 import com.imd030.sgr.entity.Requisicao;
@@ -17,9 +21,12 @@ public class RequisicaoBuilder {
 
     private static int numeroGerador = 1;
 
-    public List<Requisicao> gerarRequisicoes() {
+
+    private RequisicaoDao requisicaoDao;
+
+    public List<Requisicao> gerarRequisicoes(Context contexto) {
         List<Requisicao> requisicoes = new ArrayList<Requisicao>();
-        requisicoes.add(criarRequisicao("Solicitante 1", "Machado de Assis", "machadoassis@email.com"));
+        //requisicoes.add(criarRequisicao("Solicitante 1", "Machado de Assis", "machadoassis@email.com"));
         requisicoes.add(criarRequisicao("Solicitante 1", "José de Alencar", "josealencar@email.com"));
         requisicoes.add(criarRequisicao("Solicitante 1", "Lima Barreto", "limabarreto@email.com"));
         requisicoes.add(criarRequisicao("Solicitante 1", "Raquel de Queiroz", "raquequeiroz@email.com"));
@@ -27,6 +34,17 @@ public class RequisicaoBuilder {
         requisicoes.add(criarRequisicao("Solicitante 1", "Dom Casmurro", "domcasmurro@email.com"));
         requisicoes.add(criarRequisicao("Solicitante 1", "Pedro Alvez Cabral", "pedrocabral@email.com"));
         requisicoes.add(criarRequisicao("Solicitante 1", "João da Silva", "joaosilva@email.com"));
+
+try {
+    requisicaoDao = new RequisicaoDao(contexto);
+
+    requisicaoDao.insert(criarRequisicao("Solicitante 1", "Machado de Assis", "machadoassis@email.com"));
+
+    Log.d("Teste", requisicaoDao.listar().toString());
+}catch (Exception e){
+    e.printStackTrace();
+    Log.d("Teste", e.getMessage());
+}
         return requisicoes;
     }
 
@@ -55,11 +73,11 @@ public class RequisicaoBuilder {
 
         }
 
-        Paciente paciente = new Paciente("0"+ numeroGerador+13, nomePaciente,  numeroGerador, emailPaciente, "987654321");
+        Paciente paciente = new Paciente( numeroGerador+13L, nomePaciente, "21/06/1838", emailPaciente, "00079265403", "000023838");
 
         requisicao.setPaciente(paciente);
 
-        Laboratorio laboratorio = new Laboratorio("Microbiologia", "987654322");
+        Laboratorio laboratorio = Laboratorio.MICROBIOLOGIA;
 
         requisicao.setLaboratorio(laboratorio);
 
