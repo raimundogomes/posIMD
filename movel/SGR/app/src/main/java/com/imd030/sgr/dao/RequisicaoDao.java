@@ -36,7 +36,7 @@ public class RequisicaoDao {
         values.put("ID_SITUACAO", requisicao.getStatus().getCodigo());
         values.put("ID_LABORATORIO", requisicao.getLaboratorio().getId());
 
-        if(requisicao.getPaciente()!=null && requisicao.getPaciente().getId()!=null){
+        if(requisicao.getPaciente()!=null && requisicao.getPaciente().getProntuario()!=null){
             values.put("ID_PACIENTE", requisicao.getPaciente().getId());
         }
 

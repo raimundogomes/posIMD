@@ -87,20 +87,13 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
 
         queue = Volley.newRequestQueue(ListaRequisicaoActivity.this);
 
-        //listView
-        //requisicoes = obterRequisicoes();
-
         ListView listView = (ListView) findViewById(R.id.list_requisicao);
 
         registerForContextMenu(listView);
 
         requisicoesfiltradas = ((List) ((ArrayList) requisicoes).clone());
 
-        SharedPreferences preferencias = getPreferences(MODE_PRIVATE);
-
-        int configuracaoOrdenacao = preferencias.getInt(Constantes.CONFIGURACAO_CRITERIO_SELECIONADO, criterioOrdenacaoSelecionado);
-
-        Collections.sort(requisicoesfiltradas, new RequisicaoComparator(configuracaoOrdenacao));
+        ordenarComBaseConfiguracao();
 
         requisicaoAdapter = new RequisicaoAdapter(this,  requisicoesfiltradas);
 
@@ -117,6 +110,14 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
 
         verificaConectividade();
 
+    }
+
+    private void ordenarComBaseConfiguracao() {
+        SharedPreferences preferencias = getPreferences(MODE_PRIVATE);
+
+        int configuracaoOrdenacao = preferencias.getInt(Constantes.CONFIGURACAO_CRITERIO_SELECIONADO, criterioOrdenacaoSelecionado);
+
+        Collections.sort(requisicoesfiltradas, new RequisicaoComparator(configuracaoOrdenacao));
     }
 
     private void verificaConectividade() {
@@ -226,17 +227,7 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
 
         DetectaConexao detectaConexao = new DetectaConexao(getApplicationContext());
         if(detectaConexao.existeConexao()){
-            final Random myRandom = new Random();
 
-            int num = myRandom.nextInt(requisicoes.size()-1);
-            Requisicao requisicao =  requisicoes.get(num);
-
-
-            if(requisicao.getStatus()==StatusRequisicao.SOLICITADA){
-                requisicao.setStatus(StatusRequisicao.CANCELADA);
-            }
-
-            Collections.sort(requisicoesfiltradas, new RequisicaoComparator(criterioOrdenacaoSelecionado));
             exibirMensagemSicronizacao();
         }
         else{
@@ -433,8 +424,6 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
     public void afterTextChanged(Editable s) {}
 
     public void novaRequisicao() {
-        //Intent intent = new Intent(this, NovaRequisicaoActivity.class);
-        //startActivityForResult(intent, Constantes.INDICE_ACTIVITY_NOVA_REQUISICAO);
 
         DetectaConexao detectaConexao = new DetectaConexao(getApplicationContext());
         if(detectaConexao.existeConexao()){

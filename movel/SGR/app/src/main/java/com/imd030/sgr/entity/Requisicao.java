@@ -15,7 +15,7 @@ public class Requisicao implements Serializable {
 
     private Date dataRequisicao;
 
-    private Solicitante solicitante;
+    private Integer crm;
 
     private Paciente paciente;
 
@@ -29,11 +29,11 @@ public class Requisicao implements Serializable {
 
     private List<Exame> exames;
 
-    private Date dataFim;
+    private Date dataUltimaModificacao;
 
 
     public Requisicao() {
-        
+
     }
 
     public List<Exame> getExames() {
@@ -44,9 +44,8 @@ public class Requisicao implements Serializable {
         this.exames = exames;
     }
 
-    public Requisicao(Date dataRequisicao, Solicitante solicitante, Paciente paciente, StatusRequisicao status) {
+    public Requisicao(Date dataRequisicao, Paciente paciente, StatusRequisicao status) {
         this.dataRequisicao = dataRequisicao;
-        this.solicitante = solicitante;
         this.paciente = paciente;
         this.status = status;
         this.numero = numero++;
@@ -58,14 +57,6 @@ public class Requisicao implements Serializable {
 
     public void setDataRequisicao(Date dataRequisicao) {
         this.dataRequisicao = dataRequisicao;
-    }
-
-    public Solicitante getSolicitante() {
-        return solicitante;
-    }
-
-    public void setSolicitante(Solicitante solicitante) {
-        this.solicitante = solicitante;
     }
 
     public Paciente getPaciente() {
@@ -92,12 +83,12 @@ public class Requisicao implements Serializable {
         this.numero = numero;
     }
 
-    public Date getDataFim() {
-        return dataFim;
+    public Date getDataUltimaModificacao() {
+        return dataUltimaModificacao;
     }
 
-    public void setDataFim(Date dataFim) {
-        this.dataFim = dataFim;
+    public void setDataUltimaModificacao(Date dataFim) {
+        this.dataUltimaModificacao = dataFim;
     }
 
     public Laboratorio getLaboratorio() {
@@ -124,18 +115,26 @@ public class Requisicao implements Serializable {
         this.id = id;
     }
 
+    public Integer getCrm() {
+        return crm;
+    }
+
+    public void setCrm(Integer crm) {
+        this.crm = crm;
+    }
+
+
     @Override
     public String toString() {
         return "Requisicao{" +
                 "dataRequisicao=" + dataRequisicao +
-                ", solicitante=" + solicitante +
                 ", paciente=" + paciente +
                 ", status=" + status +
                 ", id=" + id +
                 ", numero=" + numero +
                 ", laboratorio=" + laboratorio +
                 ", exames=" + exames +
-                ", dataFim=" + dataFim +
+                ", dataUltimaModificacao=" + dataUltimaModificacao +
                 '}';
     }
 

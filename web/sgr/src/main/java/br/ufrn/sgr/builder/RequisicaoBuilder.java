@@ -66,7 +66,7 @@ public class RequisicaoBuilder {
         else{
             requisicao.setStatus(StatusRequisicao.LAUDO_DEFINITIVO);
             requisicao.getExames().add(examesBulder.adicionaExameSangueResultadoDefinitivo());
-            requisicao.setDataFim(new Date());
+            requisicao.setDataUltimaModificacao(new Date());
 
         }
 

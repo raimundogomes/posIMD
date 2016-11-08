@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-
 /**
  * Created by thiago on 28/05/16.
  */
@@ -21,13 +18,13 @@ public class Requisicao implements Serializable {
 
 	private Date dataRequisicao;
 
-	private Solicitante solicitante;
-
 	private Paciente paciente;
 
 	private StatusRequisicao status;
 
 	private Long id;
+	
+	private Integer crm;
 
 	private long numero = 1;
 
@@ -35,7 +32,7 @@ public class Requisicao implements Serializable {
 
 	private List<Exame> exames;
 
-	private Date dataFim;
+	private Date dataUltimaModificacao;
 
 	public Requisicao() {
 		numero++;
@@ -49,9 +46,8 @@ public class Requisicao implements Serializable {
 		this.exames = exames;
 	}
 
-	public Requisicao(Date dataRequisicao, Solicitante solicitante, Paciente paciente, StatusRequisicao status) {
+	public Requisicao(Date dataRequisicao, Paciente paciente, StatusRequisicao status) {
 		this.dataRequisicao = dataRequisicao;
-		this.solicitante = solicitante;
 		this.paciente = paciente;
 		this.status = status;
 		this.numero = numero++;
@@ -65,12 +61,13 @@ public class Requisicao implements Serializable {
 		this.dataRequisicao = dataRequisicao;
 	}
 
-	public Solicitante getSolicitante() {
-		return solicitante;
+
+	public Integer getCrm() {
+		return crm;
 	}
 
-	public void setSolicitante(Solicitante solicitante) {
-		this.solicitante = solicitante;
+	public void setCrm(Integer crm) {
+		this.crm = crm;
 	}
 
 	public Paciente getPaciente() {
@@ -97,12 +94,12 @@ public class Requisicao implements Serializable {
 		this.numero = numero;
 	}
 
-	public Date getDataFim() {
-		return dataFim;
+	public Date getDataUltimaModificacao() {
+		return dataUltimaModificacao;
 	}
 
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
+	public void setDataUltimaModificacao(Date dataFim) {
+		this.dataUltimaModificacao = dataFim;
 	}
 
 	public Laboratorio getLaboratorio() {
@@ -137,7 +134,7 @@ public class Requisicao implements Serializable {
 	@Override
 	public String toString() {
 		return "Requisicao [dataRequisicao=" + dataRequisicao + ", paciente=" + paciente + ", status=" + status
-				+ ", numero=" + numero + ", laboratorio=" + laboratorio + ", exames=" + exames + ", dataFim=" + dataFim
+				+ ", numero=" + numero + ", laboratorio=" + laboratorio + ", exames=" + exames + ", dataFim=" + dataUltimaModificacao
 				+ "]";
 	}
 

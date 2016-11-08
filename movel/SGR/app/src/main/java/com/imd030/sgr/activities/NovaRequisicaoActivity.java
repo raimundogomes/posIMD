@@ -1,15 +1,12 @@
 package com.imd030.sgr.activities;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -27,16 +24,14 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.imd030.sgr.R;
-import com.imd030.sgr.builder.PacienteBuilder;
+import com.imd030.sgr.dao.RequisicaoDao;
 import com.imd030.sgr.entity.Amostra;
 import com.imd030.sgr.entity.Exame;
 import com.imd030.sgr.entity.Laboratorio;
 import com.imd030.sgr.entity.Paciente;
 import com.imd030.sgr.entity.Requisicao;
-import com.imd030.sgr.entity.Solicitante;
 import com.imd030.sgr.entity.StatusRequisicao;
 import com.imd030.sgr.entity.TipoExame;
-import com.imd030.sgr.entity.TipoSolicitante;
 import com.imd030.sgr.utils.Constantes;
 import com.imd030.sgr.utils.DateUtils;
 
@@ -48,7 +43,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Random;
 
 public class NovaRequisicaoActivity extends PrincipalActivity implements
         View.OnClickListener{
@@ -90,6 +84,8 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
     private static Date dataAmostraExameUrina;
 
     private Button buttonSalvar;
+
+    RequisicaoDao requisicaoDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +133,9 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
         //salvar
         buttonSalvar = (Button) findViewById(R.id.buttonSalvar);
         buttonSalvar.setOnClickListener(this);
+
+        /////////////////
+        requisicaoDao = new RequisicaoDao(this);
     }
 
     private void atualizarDadosPaciente(Paciente paciente) {
@@ -199,9 +198,7 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
 
             final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
             String jsonInString = gson.toJson(requisicao);
-            Log.d("Teste", jsonInString);
-
-            //jsonBody = new JSONObject("{\"requisicao\":\"" + jsonInString +  "\"}");
+            
             jsonBody = new JSONObject(jsonInString);
 
 
@@ -220,7 +217,9 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
                        e.printStackTrace();
                         Log.d("Teste", e.getMessage());
                     }
-
+                    
+                    persistirRequisicao(requisicao);
+                    
                     Intent result = new Intent();
                     result.putExtra(Constantes.REQUISICAO_NOVA_ACTIVITY, requisicao);
                     setResult(RESULT_OK, result);
@@ -229,6 +228,7 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
             },new Response.ErrorListener(){
                 @Override
                 public void onErrorResponse(VolleyError error) {
+
                     Log.d("Teste", error.toString());
                     Toast.makeText(getApplicationContext(),
                             "Não foi possível estabelecer conexão para inserir a requisição.",
@@ -243,12 +243,14 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
         }
     }
 
+    private void persistirRequisicao(Requisicao requisicao) {
+        requisicaoDao.insert(requisicao);
+    }
+
     private Requisicao montarRequisicao() {
         Requisicao requisicao = new Requisicao();
 
         requisicao.setStatus(StatusRequisicao.SOLICITADA);
-        Random gerador = new Random();
-        requisicao.setNumero(gerador.nextInt(10000));
         requisicao.setDataRequisicao(new Date());
 
         requisicao.setPaciente(paciente);
