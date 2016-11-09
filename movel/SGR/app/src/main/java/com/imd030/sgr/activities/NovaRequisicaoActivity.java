@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.imd030.sgr.R;
+import com.imd030.sgr.dao.PacienteDao;
 import com.imd030.sgr.dao.RequisicaoDao;
 import com.imd030.sgr.entity.Amostra;
 import com.imd030.sgr.entity.Exame;
@@ -86,6 +87,7 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
     private Button buttonSalvar;
 
     RequisicaoDao requisicaoDao;
+    PacienteDao pacienteDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +138,7 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
 
         /////////////////
         requisicaoDao = new RequisicaoDao(this);
+        pacienteDao = new PacienteDao(this);
     }
 
     private void atualizarDadosPaciente(Paciente paciente) {
@@ -244,7 +247,20 @@ public class NovaRequisicaoActivity extends PrincipalActivity implements
     }
 
     private void persistirRequisicao(Requisicao requisicao) {
+
+        Paciente pacienteBD = pacienteDao.consultarPeloProntuario(requisicao.getPaciente().getProntuario());
+
+        if(pacienteBD.getId()==null){
+            pacienteBD =  pacienteDao.insert(requisicao.getPaciente());
+        }else{
+            pacienteDao.update(requisicao.getPaciente());
+        }
+
+        requisicao.getPaciente().setId(pacienteBD.getId());
+
         requisicaoDao.insert(requisicao);
+
+       // Log.d("Teste", requisicaoDao.listar().toString());
     }
 
     private Requisicao montarRequisicao() {

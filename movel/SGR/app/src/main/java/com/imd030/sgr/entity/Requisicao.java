@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Requisicao implements Serializable {
 
-    public static String[] COLUNAS = new String[]{"ID", "NUMERO", "DATA_REQUISICAO, ID_SITUACAO, ID_LABORATORIO, ID_PACIENTE"};
+    public static String[] COLUNAS = new String[]{"ID", "NUMERO", "DATA_REQUISICAO", "ID_SITUACAO", "ID_LABORATORIO", "ID_PACIENTE", "DATA_ULTIMA_ATUALIZACAO"};
 
     private static final String FORMATO_NUMERO = "%08d";
 
@@ -30,7 +30,6 @@ public class Requisicao implements Serializable {
     private List<Exame> exames;
 
     private Date dataUltimaModificacao;
-
 
     public Requisicao() {
 

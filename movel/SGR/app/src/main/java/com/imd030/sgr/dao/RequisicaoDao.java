@@ -21,11 +21,13 @@ import java.util.List;
 
 public class RequisicaoDao {
 
+    public static final String REQUISICAO = "requisicao";
     private BaseDao baseDao;
 
     public RequisicaoDao(Context contexto) {
 
         baseDao = BaseDao.getInstance(contexto);
+
     }
 
     public void insert(Requisicao requisicao) {
@@ -37,12 +39,14 @@ public class RequisicaoDao {
         values.put("ID_LABORATORIO", requisicao.getLaboratorio().getId());
 
         if(requisicao.getPaciente()!=null && requisicao.getPaciente().getProntuario()!=null){
-            values.put("ID_PACIENTE", requisicao.getPaciente().getId());
+       //     values.put("ID_PACIENTE", requisicao.getPaciente().getId());
         }
 
         values.put("DATA_REQUISICAO", BaseDao.FORMATE_DATE.format(requisicao.getDataRequisicao()));
 
-        long id = baseDao.getDatabase().insert("requisicao", null, values);
+        values.put("DATA_ULTIMA_ATUALIZACAO", BaseDao.FORMATE_DATE.format(requisicao.getDataRequisicao()));
+
+        long id = baseDao.getDatabase().insert(REQUISICAO, null, values);
 
         requisicao.setId(id);
 
@@ -51,34 +55,40 @@ public class RequisicaoDao {
 
     public void delete(Requisicao requisicao) {
 
-        int alt = baseDao.getDatabase().delete("requisicao", "ID=?",
+        int alt = baseDao.getDatabase().delete(REQUISICAO, "ID=?",
                 new String[] { String.valueOf(requisicao.getId()) });
 
     }
 
     public List<Requisicao> listar(){
         List<Requisicao> requisicoes = new ArrayList<Requisicao>();
-        Cursor c = baseDao.getDatabase().query("REQUISICAO", Requisicao.COLUNAS,
+        Cursor c = baseDao.getDatabase().query(REQUISICAO, Requisicao.COLUNAS,
                  null, null, null, null, null);
         if (c.moveToFirst()){
             do{
                 Requisicao requisicao = new Requisicao();
+
                 requisicao.setId(c.getLong(0));
                 requisicao.setNumero(c.getInt(1));
-
-                requisicao.setSituacao(c.getInt(2));
-
-                requisicao.setLaboratorio(Laboratorio.getLaboratorioById(c.getInt(3)));
 
                 Date data;
 
                 try {
                     data = BaseDao.FORMATE_DATE.parse(c.getString(2));
                 } catch (ParseException e) {
+                    e.printStackTrace();
                     data = new Date();
-                }
 
+                }
                 requisicao.setDataRequisicao(data);
+
+                requisicao.setSituacao(c.getInt(3));
+
+                requisicao.setLaboratorio(Laboratorio.getLaboratorioById(c.getInt(4)));
+
+              //  requisicao.setPaciente();
+
+
                 requisicoes.add(requisicao);
             }while(c.moveToNext());
         }

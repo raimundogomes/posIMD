@@ -35,6 +35,7 @@ import com.google.gson.JsonIOException;
 import com.imd030.sgr.R;
 import com.imd030.sgr.adapter.RequisicaoAdapter;
 import com.imd030.sgr.comparator.RequisicaoComparator;
+import com.imd030.sgr.dao.RequisicaoDao;
 import com.imd030.sgr.entity.Email;
 import com.imd030.sgr.entity.Paciente;
 import com.imd030.sgr.entity.Requisicao;
@@ -77,6 +78,8 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
 
     private int criterioOrdenacaoSelecionado = Constantes.CRITERIO_DATA_REQUISICAO;
 
+    private RequisicaoDao requisicaoDao;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +87,11 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
 
         setContentView(R.layout.activity_requisicoes);
 
+        requisicaoDao = new RequisicaoDao(this);
+
+        if(requisicoes.size()==0){
+        //    requisicoes = requisicaoDao.listar();
+        }
 
         queue = Volley.newRequestQueue(ListaRequisicaoActivity.this);
 

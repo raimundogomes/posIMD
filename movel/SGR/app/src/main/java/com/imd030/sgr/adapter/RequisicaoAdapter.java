@@ -55,7 +55,10 @@ public class RequisicaoAdapter extends ArrayAdapter<Requisicao>{
 
         //paciente
         TextView textViewPaciente = (TextView) view.findViewById(R.id.text_paciente);
-        textViewPaciente.setText(requisicao.getPaciente().getNome());
+        if(requisicao.getPaciente()!=null){
+            textViewPaciente.setText(requisicao.getPaciente().getNome());
+        }
+
 
         //solicitante
         TextView textViewSolicitante = (TextView) view.findViewById(R.id.text_exames);

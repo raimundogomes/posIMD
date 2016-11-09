@@ -3,6 +3,7 @@ package com.imd030.sgr.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by netou on 31/10/2016.
@@ -17,8 +18,9 @@ public class SgrBD  extends SQLiteOpenHelper  {
                         "(ID INTEGER PRIMARY KEY," +
                         "NOME TEXT," +
                         "NOME_MAE TEXT(150)," +
-                        "DATA_NASCIMENTO TEXT(20)," +
+                        "DATA_NASCIMENTO TEXT(10)," +
                         "CPF TEXT(11)," +
+                        "CNS TEXT(11)," +
                         "PRONTUARIO INTEGER," +
                         "TELEFONE TEXT(14)," +
                         "EMAIL TEXT" +
@@ -32,7 +34,8 @@ public class SgrBD  extends SQLiteOpenHelper  {
                     "DATA_REQUISICAO TEXT(20), " +
                     "ID_SITUACAO INTEGER, " +
                     "ID_LABORATORIO INTEGER, " +
-                    "DATA_FIM TEXT(20)); ";
+                    "DATA_ULTIMA_ATUALIZACAO TEXT(20)" +
+                    "); ";
 
     private static final String CREATE_TABLE_EXAME =
             " CREATE TABLE EXAME " +
@@ -42,16 +45,7 @@ public class SgrBD  extends SQLiteOpenHelper  {
                     "ID_REQUISICAO INTEGER, " +
                     "RESULTADO TEXT ); ";
 
-    private static final StringBuffer CREATE_TABLES = new StringBuffer();
-
     private static final String INSERT_PACIENTES = "INSERT INTO PACIENTE VALUES (";
-
-    static{
-
-        CREATE_TABLES.append(CREATE_TABLE_PACIENTE);
-        CREATE_TABLES.append(CREATE_TABLE_REQUISICAO);
-        CREATE_TABLES.append(CREATE_TABLE_EXAME);
-    }
 
     SgrBD(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -59,14 +53,19 @@ public class SgrBD  extends SQLiteOpenHelper  {
 
     @Override
        public void onCreate(SQLiteDatabase db) {
-            db.execSQL(CREATE_TABLES.toString());
+        db.execSQL(CREATE_TABLE_PACIENTE);
+        db.execSQL(CREATE_TABLE_REQUISICAO);
+        db.execSQL(CREATE_TABLE_EXAME);
         }
 
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
             db.execSQL("DROP TABLES");
-            db.execSQL(CREATE_TABLES.toString());
+            Log.d("Teste", CREATE_TABLE_REQUISICAO.toString());
+            db.execSQL(CREATE_TABLE_PACIENTE);
+            db.execSQL(CREATE_TABLE_REQUISICAO);
+            db.execSQL(CREATE_TABLE_EXAME);
         }
 }
 
