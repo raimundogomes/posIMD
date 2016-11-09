@@ -34,7 +34,7 @@ public class PacienteDao {
 
         if (cursor.moveToFirst()){
 
-            paciente = MontarPaciente(cursor);
+            paciente = montarPaciente(cursor);
 
         }
 
@@ -51,7 +51,7 @@ public class PacienteDao {
 
         if (cursor.moveToFirst()){
 
-            paciente = MontarPaciente(cursor);
+            paciente = montarPaciente(cursor);
 
         }
 
@@ -94,7 +94,7 @@ public class PacienteDao {
         return values;
     }
 
-    private Paciente MontarPaciente(Cursor cursor) {
+    private Paciente montarPaciente(Cursor cursor) {
         Paciente p = new Paciente();
         p.setId(cursor.getLong(0));
         p.setNome(cursor.getString(1));

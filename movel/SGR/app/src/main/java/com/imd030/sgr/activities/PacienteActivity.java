@@ -41,9 +41,13 @@ public class PacienteActivity extends PrincipalActivity {
         TextView cns = (TextView) findViewById(R.id.text_cns);
         cns.setText(paciente.getCns());
 
+        TextView nomeMae = (TextView) findViewById(R.id.text_nomeMae);
+        nomeMae.setText(paciente.getNome());
+
 
         TextView nome = (TextView) findViewById(R.id.text_paciente);
         nome.setText(paciente.getNome());
+
 
         TextView telefone = (TextView) findViewById(R.id.text_fone);
         telefone.setText("  " + paciente.getTelefone());

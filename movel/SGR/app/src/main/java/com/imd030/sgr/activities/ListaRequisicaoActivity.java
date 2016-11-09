@@ -90,7 +90,7 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
         requisicaoDao = new RequisicaoDao(this);
 
         if(requisicoes.size()==0){
-        //    requisicoes = requisicaoDao.listar();
+            requisicoes = requisicaoDao.listar();
         }
 
         queue = Volley.newRequestQueue(ListaRequisicaoActivity.this);

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.imd030.sgr.entity.Laboratorio;
+import com.imd030.sgr.entity.Paciente;
 import com.imd030.sgr.entity.Requisicao;
 
 import java.text.ParseException;
@@ -22,6 +23,9 @@ import java.util.List;
 public class RequisicaoDao {
 
     public static final String REQUISICAO = "requisicao";
+
+    public static String[] COLUNAS_REQUISICAO = new String[]{"ID", "NUMERO", "DATA_REQUISICAO", "ID_SITUACAO", "ID_LABORATORIO", "ID_PACIENTE", "DATA_ULTIMA_ATUALIZACAO"};
+
     private BaseDao baseDao;
 
     public RequisicaoDao(Context contexto) {
@@ -38,9 +42,7 @@ public class RequisicaoDao {
         values.put("ID_SITUACAO", requisicao.getStatus().getCodigo());
         values.put("ID_LABORATORIO", requisicao.getLaboratorio().getId());
 
-        if(requisicao.getPaciente()!=null && requisicao.getPaciente().getProntuario()!=null){
-       //     values.put("ID_PACIENTE", requisicao.getPaciente().getId());
-        }
+        values.put("ID_PACIENTE", requisicao.getPaciente().getId());
 
         values.put("DATA_REQUISICAO", BaseDao.FORMATE_DATE.format(requisicao.getDataRequisicao()));
 
@@ -61,39 +63,67 @@ public class RequisicaoDao {
     }
 
     public List<Requisicao> listar(){
+
+
+        String rawQuery = "SELECT * FROM "+ REQUISICAO +" INNER JOIN " + PacienteDao.PACIENTE
+                + " ON " + REQUISICAO+ ".ID_PACIENTE" + " = " + PacienteDao.PACIENTE +".ID";
+
+        Cursor cursor = baseDao.getDatabase().rawQuery(rawQuery, null );
+
         List<Requisicao> requisicoes = new ArrayList<Requisicao>();
-        Cursor c = baseDao.getDatabase().query(REQUISICAO, Requisicao.COLUNAS,
-                 null, null, null, null, null);
-        if (c.moveToFirst()){
+        if (cursor.moveToFirst()){
             do{
                 Requisicao requisicao = new Requisicao();
 
-                requisicao.setId(c.getLong(0));
-                requisicao.setNumero(c.getInt(1));
+                requisicao.setId(cursor.getLong(0));
+                requisicao.setNumero(cursor.getInt(cursor.getColumnIndex("NUMERO")));
 
-                Date data;
+                Log.d("Teste", cursor.getInt(cursor.getColumnIndex("NUMERO"))+"");
+                Log.d("Teste", cursor.getString(cursor.getColumnIndex("DATA_REQUISICAO"))+"");
 
-                try {
-                    data = BaseDao.FORMATE_DATE.parse(c.getString(2));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                    data = new Date();
 
-                }
-                requisicao.setDataRequisicao(data);
 
-                requisicao.setSituacao(c.getInt(3));
+                requisicao.setDataRequisicao(montarData(cursor.getString(cursor.getColumnIndex("DATA_REQUISICAO"))));
+                requisicao.setSituacao(cursor.getInt(cursor.getColumnIndex("ID_SITUACAO")));
+                requisicao.setLaboratorio(Laboratorio.getLaboratorioById(cursor.getInt(cursor.getColumnIndex("ID_LABORATORIO"))));
+                requisicao.setDataUltimaModificacao(montarData(cursor.getString(cursor.getColumnIndex("DATA_ULTIMA_ATUALIZACAO"))));
 
-                requisicao.setLaboratorio(Laboratorio.getLaboratorioById(c.getInt(4)));
+                Paciente paciente = montarPaciente(cursor);
 
-              //  requisicao.setPaciente();
-
+                requisicao.setPaciente(paciente);
 
                 requisicoes.add(requisicao);
-            }while(c.moveToNext());
+            }while(cursor.moveToNext());
         }
-        c.close();
+        cursor.close();
         return requisicoes;
+    }
+
+    private Paciente montarPaciente(Cursor cursor) {
+        Paciente p = new Paciente();
+        p.setId(cursor.getLong(cursor.getColumnIndex("ID_PACIENTE")));
+        p.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
+        p.setNomeMae(cursor.getString(cursor.getColumnIndex("NOME_MAE")));
+        p.setDataNascimento(cursor.getString(cursor.getColumnIndex("DATA_NASCIMENTO")));
+        p.setCpf(cursor.getString(cursor.getColumnIndex("CPF")));
+        p.setProntuario(cursor.getLong(cursor.getColumnIndex("PRONTUARIO")));
+        p.setCns(cursor.getString(cursor.getColumnIndex("CNS")));
+        p.setTelefone(cursor.getString(cursor.getColumnIndex("TELEFONE")));
+        p.setEmail(cursor.getString(cursor.getColumnIndex("EMAIL")));
+        return p;
+    }
+
+    private Date montarData(String string) {
+        Date data;
+
+        try {
+            data = BaseDao.FORMATE_DATE.parse(string );
+        } catch (ParseException e) {
+            e.printStackTrace();
+            data = new Date();
+
+        }
+        return data;
     }
 
 }

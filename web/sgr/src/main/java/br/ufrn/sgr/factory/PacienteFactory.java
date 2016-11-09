@@ -22,7 +22,7 @@ public class PacienteFactory {
 		listaPacientes.put(i, new Paciente(i++, "Cecília Meireles" ,"21/06/1990", "Maria da Silva", "59379265403", ""));
 		listaPacientes.put(i, new Paciente(i++, "Lima Barreto", "Maria da Silva","21/06/1890", "89379665403", ""));
 		listaPacientes.put(i, new Paciente(i++, "Clarice Lispector" , "Maria da Silva","10/12/1920",  "87379265403", ""));
-		listaPacientes.put(i, new Paciente(i++, "Lima Barreto", "Raquel de Queiroz" ,"21/01/1991", "89379065403", ""));
+		listaPacientes.put(i, new Paciente(i++, "Lima Barreto", "Raquel Silva" ,"21/01/1991", "89379065403", ""));
 	}
 	
 	

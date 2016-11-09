@@ -1,6 +1,7 @@
 package com.imd030.sgr.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,6 @@ import java.util.List;
  */
 public class Requisicao implements Serializable {
 
-    public static String[] COLUNAS = new String[]{"ID", "NUMERO", "DATA_REQUISICAO", "ID_SITUACAO", "ID_LABORATORIO", "ID_PACIENTE", "DATA_ULTIMA_ATUALIZACAO"};
 
     private static final String FORMATO_NUMERO = "%08d";
 
@@ -40,7 +40,7 @@ public class Requisicao implements Serializable {
     }
 
     public void setExames(List<Exame> exames) {
-        this.exames = exames;
+        this.exames = exames==null? new ArrayList<Exame>(): exames;
     }
 
     public Requisicao(Date dataRequisicao, Paciente paciente, StatusRequisicao status) {
@@ -103,7 +103,7 @@ public class Requisicao implements Serializable {
     }
 
     public String getExamesFormatados(){
-        return exames.toString();
+        return exames==null ? "": exames.toString();
     }
 
     public Long getId() {

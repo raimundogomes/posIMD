@@ -29,16 +29,6 @@ public class RequisicaoBuilder {
     
     private static Map<Long,Requisicao> requisicoes = new HashMap<Long,Requisicao>();
     
-    static{
-//    	requisicoes.put(numeroGerador, criarRequisicao());
-//        requisicoes.put(numeroGerador, criarRequisicao());
-//        requisicoes.put(numeroGerador, criarRequisicao());
-//        requisicoes.put(numeroGerador, criarRequisicao());
-//        requisicoes.put(numeroGerador, criarRequisicao());
-//        requisicoes.put(numeroGerador, criarRequisicao());
-//        requisicoes.put(numeroGerador, criarRequisicao());
-//        requisicoes.put(numeroGerador, criarRequisicao());
-    }
 
     public static Map<Long, Requisicao> getRequisicoes() {
 		return requisicoes;
@@ -78,10 +68,6 @@ public class RequisicaoBuilder {
 		}
 
         requisicao.setLaboratorio(Laboratorio.MICROBIOLOGIA);
-
-        Solicitante solicitante = new Solicitante();
-        solicitante.setNome("Solicitante 1");
-        requisicao.setSolicitante(solicitante);
 
         return requisicao;
     }
