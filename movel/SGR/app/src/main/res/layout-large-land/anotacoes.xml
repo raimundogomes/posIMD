@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <fragment
+        android:id="@+id/fragment_viagens"
+        android:name=
+            "com.imd030.sgr.fragments.ViagemListFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+    <fragment
+        android:id="@+id/fragment_anotacoes"
+        android:name=
+            "com.imd030.sgr.fragments.AnotacaoListFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+    <fragment
+        android:id="@+id/fragment_anotacao"
+        android:name=
+            "com.imd030.sgr.fragments.AnotacaoFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+</LinearLayout>

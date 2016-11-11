@@ -70,8 +70,6 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
 
     private List<Requisicao> requisicoesfiltradas;
 
-    private BroadcastReceiver receiver;
-
     private Requisicao requisicaoSelecionada = null;
 
     private RequisicaoAdapter requisicaoAdapter;
@@ -116,7 +114,6 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
 
         editSearch.addTextChangedListener(this);
 
-        verificaConectividade();
 
     }
 
@@ -128,20 +125,6 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
         Collections.sort(requisicoesfiltradas, new RequisicaoComparator(configuracaoOrdenacao));
     }
 
-    private void verificaConectividade() {
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(android.net.ConnectivityManager.CONNECTIVITY_ACTION);
-
-        receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-              //  intent.
-                Toast toast = Toast.makeText(context, "conexao mudou!",     Toast.LENGTH_LONG);
-                toast.show();
-            }
-        };
-        registerReceiver(receiver, filter);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -447,12 +430,4 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
 
     }
 
-    @Override
-    protected void onDestroy() {
-        if (receiver != null) {
-            unregisterReceiver(receiver);
-            receiver = null;
-        }
-        super.onDestroy();
-    }
 }

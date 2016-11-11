@@ -46,7 +46,7 @@ public class LoginActivity extends PrincipalActivity {
     	String usuarioInformado = usuario.getText().toString();
     	String senhaInformada = senha.getText().toString();
     	
-    	if("android".equals(usuarioInformado)  && "imd@2016".equals(senhaInformada)){
+    	if("neto".equals(usuarioInformado)  && "imd".equals(senhaInformada)){
 			SharedPreferences preferencias = getSharedPreferences(Constantes.PREF_NAME, MODE_PRIVATE);
     		Editor editor = preferencias.edit();
     		editor.putBoolean(Constantes.CONFIGURACAO_CONECTADO, manterConectado.isChecked());

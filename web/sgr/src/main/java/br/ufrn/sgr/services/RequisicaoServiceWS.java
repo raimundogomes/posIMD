@@ -64,6 +64,7 @@ public class RequisicaoServiceWS {
 		for (Requisicao requisicao : lista) {
 			listahtml += "</br> Número: " + requisicao.getNumeroFormatado() + "</br> "; 
 			listahtml +=  "</br> Data da requisição: " + requisicao.getDataRequisicao() + "</br> ";
+			listahtml +=  "</br> Situação: " + requisicao.getStatus()+ "</br> ";
 			listahtml +=  "</br> " + requisicao.getPaciente() + "</br> "; 
 			listahtml +=  "</br> Laboratório: " + requisicao.getLaboratorio() + "</br> ";
 			listahtml +=  "</br> Exames:  " + requisicao.getExamesFormatados()+ "</br></br><HR SIZE='2'></hr> "; 

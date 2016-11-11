@@ -36,11 +36,11 @@ public class Requisicao implements Serializable {
     }
 
     public List<Exame> getExames() {
-        return exames;
+        return (exames ==null)? new ArrayList<Exame>(): exames;
     }
 
     public void setExames(List<Exame> exames) {
-        this.exames = exames==null? new ArrayList<Exame>(): exames;
+        this.exames = exames;
     }
 
     public Requisicao(Date dataRequisicao, Paciente paciente, StatusRequisicao status) {
