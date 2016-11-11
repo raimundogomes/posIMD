@@ -177,6 +177,23 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
         startActivityForResult(intent, Constantes.INDICE_ACTIVITY_CONFIGURACOES);
     }
 
+    public void novaRequisicao() {
+
+        DetectaConexao detectaConexao = new DetectaConexao(getApplicationContext());
+        if(detectaConexao.existeConexao()){
+            Intent intent = new Intent(this, PesquisarPacienteActivity.class);
+            startActivityForResult(intent, Constantes.INDICE_ACTIVITY_NOVA_REQUISICAO);
+        }
+        else{
+            Toast toast = Toast.makeText(this, DetectaConexao.FALHA_CONEXAO,
+                    Toast.LENGTH_LONG);
+            toast.show();
+        }
+
+
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
@@ -414,20 +431,5 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
     @Override
     public void afterTextChanged(Editable s) {}
 
-    public void novaRequisicao() {
-
-        DetectaConexao detectaConexao = new DetectaConexao(getApplicationContext());
-        if(detectaConexao.existeConexao()){
-            Intent intent = new Intent(this, PesquisarPacienteActivity.class);
-            startActivityForResult(intent, Constantes.INDICE_ACTIVITY_NOVA_REQUISICAO);
-        }
-        else{
-            Toast toast = Toast.makeText(this, DetectaConexao.FALHA_CONEXAO,
-                    Toast.LENGTH_LONG);
-            toast.show();
-        }
-
-
-    }
 
 }

@@ -81,9 +81,9 @@ public class ConfiguracoesActivity extends PrincipalActivity{
 				break;
 		}
 
-//		Intent result = new Intent();
-//		result.putExtra(Constantes.CONFIGURACAO_ACTIVITY, criterioSelecionado);
-//		setResult(RESULT_OK, result);
-		//finish();
+		Intent result = new Intent();
+		result.putExtra(Constantes.CONFIGURACAO_ACTIVITY, criterioSelecionado);
+		setResult(RESULT_OK, result);
+		finish();
 	}
 }

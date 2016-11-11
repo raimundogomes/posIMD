@@ -13,11 +13,23 @@ import android.widget.Toast;
 import com.imd030.sgr.R;
 import com.imd030.sgr.utils.Constantes;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class LoginActivity extends PrincipalActivity {
 
 	private EditText usuario;
 	private EditText senha;
 	private CheckBox manterConectado;
+
+	private static Map<String, String> usuariosMap = new HashMap<String, String> ();
+
+	static{
+		usuariosMap.put("android", "imd@2016");
+		usuariosMap.put("neto", "imd");
+		usuariosMap.put("thiago", "imd");
+
+	}
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,8 +57,9 @@ public class LoginActivity extends PrincipalActivity {
     public void entrarOnClick(View v){
     	String usuarioInformado = usuario.getText().toString();
     	String senhaInformada = senha.getText().toString();
-    	
-    	if("neto".equals(usuarioInformado)  && "imd".equals(senhaInformada)){
+
+
+    	if(usuariosMap.containsKey(usuarioInformado) && usuariosMap.get(usuarioInformado).equals(senhaInformada)){
 			SharedPreferences preferencias = getSharedPreferences(Constantes.PREF_NAME, MODE_PRIVATE);
     		Editor editor = preferencias.edit();
     		editor.putBoolean(Constantes.CONFIGURACAO_CONECTADO, manterConectado.isChecked());

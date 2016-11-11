@@ -20,7 +20,7 @@ import com.imd030.sgr.activities.ListaRequisicaoActivity;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-    private static final String TAG = "MyFirebaseMsgService";
+    private static final String TAG = "Firebase";
 
     /**
      * Called when message is received.
@@ -54,6 +54,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 
+        sendNotification(remoteMessage.getNotification().getBody());
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
