@@ -2,8 +2,10 @@ package com.imd030.sgr.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -11,7 +13,8 @@ import com.imd030.sgr.R;
 import com.imd030.sgr.utils.Constantes;
 
 
-public class ConfiguracoesActivity extends PrincipalActivity{
+public class ConfiguracoesActivity extends PrincipalActivity implements
+        View.OnClickListener{
 
 	private RadioGroup radioOrdenacaoGroup;
 
@@ -22,6 +25,8 @@ public class ConfiguracoesActivity extends PrincipalActivity{
 
 	private int criterioSelecionado;
 
+    private Button buttonSalvar;
+
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,9 +35,15 @@ public class ConfiguracoesActivity extends PrincipalActivity{
 
 		Intent intent = getIntent();
 
-		criterioSelecionado = (int) intent.getSerializableExtra(Constantes.CONFIGURACAO_ACTIVITY);
+        SharedPreferences preferencias = getSharedPreferences(Constantes.PREF_NAME, MODE_PRIVATE);
+
+        criterioSelecionado = preferencias.getInt(Constantes.CONFIGURACAO_CRITERIO_SELECIONADO, Constantes.CRITERIO_NOME_PACIENTE);
 
 		radioOrdenacaoGroup = (RadioGroup) findViewById(R.id.radio_group_ordenacao);
+
+        //salvar
+        buttonSalvar = (Button) findViewById(R.id.botao_salvar_configuracao);
+        buttonSalvar.setOnClickListener(this);
 
 		radioNumeroRequisicaoButton = (RadioButton) findViewById(R.id.radio_numero_requisicao);
 		radioDataRequisicaoButton = (RadioButton) findViewById(R.id.radio_data_requisicao);
@@ -53,37 +64,41 @@ public class ConfiguracoesActivity extends PrincipalActivity{
 				radioSituacaoButton.setChecked(true);
 				break;
 			default:
+				radioNomePacienteButton.setChecked(true);
 				break;
 		}
     }
 
-	public void onRadioButtonClicked(View view) {
-		boolean checked = ((RadioButton) view).isChecked();
 
-		switch(view.getId()) {
+    @Override
+    public void onClick(View v) {
+
+		switch(radioOrdenacaoGroup.getCheckedRadioButtonId()) {
 			case R.id.radio_data_requisicao:
-				if (checked)
 					criterioSelecionado = Constantes.CRITERIO_DATA_REQUISICAO;
 					break;
 			case R.id.radio_nome_paciente:
-				if (checked)
 					criterioSelecionado = Constantes.CRITERIO_NOME_PACIENTE;
 					break;
 			case R.id.radio_numero_requisicao:
-				if (checked)
 					criterioSelecionado = Constantes.CRITERIO_NUMERO_REQUISICAO;
 					break;
 			case R.id.radio_status_requisicao:
-				if (checked)
 					criterioSelecionado = Constantes.CRITERIO_STATUS_REQUISICAO;
 					break;
 			default:
 				break;
 		}
 
-		Intent result = new Intent();
-		result.putExtra(Constantes.CONFIGURACAO_ACTIVITY, criterioSelecionado);
-		setResult(RESULT_OK, result);
-		finish();
-	}
+        SharedPreferences preferencias = getSharedPreferences(Constantes.PREF_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putInt(Constantes.CONFIGURACAO_CRITERIO_SELECIONADO, criterioSelecionado);
+        editor.commit();
+
+        Intent result = new Intent();
+        result.putExtra(Constantes.CONFIGURACAO_ACTIVITY, criterioSelecionado);
+        setResult(RESULT_OK, result);
+        finish();
+
+    }
 }
