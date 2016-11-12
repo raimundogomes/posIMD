@@ -118,7 +118,7 @@ public class ListaRequisicaoActivity extends PrincipalActivity implements Adapte
     }
 
     private void ordenarComBaseConfiguracao() {
-        SharedPreferences preferencias = getPreferences(MODE_PRIVATE);
+        SharedPreferences preferencias = getSharedPreferences(Constantes.PREF_NAME, MODE_PRIVATE);
 
         int configuracaoOrdenacao = preferencias.getInt(Constantes.CONFIGURACAO_CRITERIO_SELECIONADO, criterioOrdenacaoSelecionado);
 

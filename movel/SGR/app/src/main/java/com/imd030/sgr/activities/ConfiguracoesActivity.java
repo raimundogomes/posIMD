@@ -37,7 +37,7 @@ public class ConfiguracoesActivity extends PrincipalActivity implements
 
         SharedPreferences preferencias = getSharedPreferences(Constantes.PREF_NAME, MODE_PRIVATE);
 
-        criterioSelecionado = preferencias.getInt(Constantes.CONFIGURACAO_CRITERIO_SELECIONADO, Constantes.CRITERIO_NOME_PACIENTE);
+        criterioSelecionado = preferencias.getInt(Constantes.CONFIGURACAO_CRITERIO_SELECIONADO, Constantes.CRITERIO_DATA_REQUISICAO);
 
 		radioOrdenacaoGroup = (RadioGroup) findViewById(R.id.radio_group_ordenacao);
 

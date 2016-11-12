@@ -26,6 +26,7 @@ public class LoginActivity extends PrincipalActivity {
 
 	static{
 		usuariosMap.put("android", "imd@2016");
+		usuariosMap.put("imd", "123");
 		usuariosMap.put("neto", "imd");
 		usuariosMap.put("thiago", "imd");
 
