@@ -5,7 +5,6 @@ import java.util.List;
 
 import br.ufrn.sgr.model.Exame;
 import br.ufrn.sgr.model.ResultadoExame;
-import br.ufrn.sgr.model.SituacaoAmostra;
 import br.ufrn.sgr.model.TipoExame;
 
 
@@ -15,7 +14,19 @@ import br.ufrn.sgr.model.TipoExame;
  */
 public class ExamesBulder {
 
-    public List<Exame> getListaExames(){
+public static long getNumeroGerador() {
+    	
+		return numeroGerador ;
+	}
+    
+    public static void incrementarNumeroGerador(){
+    	numeroGerador++;
+    }
+
+
+	private static long numeroGerador = 1;
+    
+	public List<Exame> getListaExames(){
 
         return new ArrayList<Exame>();
 
@@ -29,7 +40,6 @@ public class ExamesBulder {
     public Exame adicionaExameSangueResultadoDefinitivo( ){
         Exame exame =   adicionaExame(TipoExame.SANGUE);
         exame.setResultadoExame(ResultadoExame.NEGATIVO);
-        exame.getAmostra().setSituacaoAmostra(SituacaoAmostra.LIBERADA);
 
         exame.setResultadoCompleto("Ausência de crescimento bacteriano na amostra analisada após 7 dias de incubação");
         return exame;

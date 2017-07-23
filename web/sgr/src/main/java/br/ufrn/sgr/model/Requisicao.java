@@ -20,12 +20,12 @@ public class Requisicao implements Serializable {
 
 	private Paciente paciente;
 
-	private StatusRequisicao status;
+	private SituacaoRequisicao status;
 
 	private Long id;
 	
-	private Integer crm;
-
+	private String emailSolicitante;
+	
 	private long numero = 1;
 
 	private Laboratorio laboratorio;
@@ -33,6 +33,17 @@ public class Requisicao implements Serializable {
 	private List<Exame> exames;
 
 	private Date dataUltimaModificacao;
+	
+	private Date dataEntrega;
+	
+    private Boolean internadoUltimas72Horas;
+    private Boolean submetidoProcedimentoInvasivo;
+    private Boolean fezUsoAntibiotico;
+    
+    private boolean temHemocultura = false;
+    private boolean temUrocultura = false;
+    private boolean temSecrecao = false;
+
 
 	public Requisicao() {
 		numero++;
@@ -46,7 +57,7 @@ public class Requisicao implements Serializable {
 		this.exames = exames;
 	}
 
-	public Requisicao(Date dataRequisicao, Paciente paciente, StatusRequisicao status) {
+	public Requisicao(Date dataRequisicao, Paciente paciente, SituacaoRequisicao status) {
 		this.dataRequisicao = dataRequisicao;
 		this.paciente = paciente;
 		this.status = status;
@@ -61,15 +72,6 @@ public class Requisicao implements Serializable {
 		this.dataRequisicao = dataRequisicao;
 	}
 
-
-	public Integer getCrm() {
-		return crm;
-	}
-
-	public void setCrm(Integer crm) {
-		this.crm = crm;
-	}
-
 	public Paciente getPaciente() {
 		return paciente;
 	}
@@ -78,11 +80,11 @@ public class Requisicao implements Serializable {
 		this.paciente = paciente;
 	}
 
-	public StatusRequisicao getStatus() {
+	public SituacaoRequisicao getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusRequisicao status) {
+	public void setStatus(SituacaoRequisicao status) {
 		this.status = status;
 	}
 
@@ -128,7 +130,7 @@ public class Requisicao implements Serializable {
 
 	public void setSituacao(int situacao) {
 
-		this.setStatus(StatusRequisicao.getStatusRequisicaoByCodigo(situacao));
+		this.setStatus(SituacaoRequisicao.getStatusRequisicaoByCodigo(situacao));
 	}
 
 	@Override
@@ -137,5 +139,70 @@ public class Requisicao implements Serializable {
 				+ ", numero=" + numero + ", laboratorio=" + laboratorio + ", exames=" + exames + ", dataFim=" + dataUltimaModificacao
 				+ "]";
 	}
+	
+	public String getEmailSolicitante() {
+		return emailSolicitante;
+	}
+
+	public void setEmailSolicitante(String emailSolicitante) {
+		this.emailSolicitante = emailSolicitante;
+	}
+
+	public Boolean getInternadoUltimas72Horas() {
+		return internadoUltimas72Horas;
+	}
+
+	public void setInternadoUltimas72Horas(Boolean internadoUltimas72Horas) {
+		this.internadoUltimas72Horas = internadoUltimas72Horas;
+	}
+
+	public Boolean getSubmetidoProcedimentoInvasivo() {
+		return submetidoProcedimentoInvasivo;
+	}
+
+	public void setSubmetidoProcedimentoInvasivo(Boolean submetidoProcedimentoInvasivo) {
+		this.submetidoProcedimentoInvasivo = submetidoProcedimentoInvasivo;
+	}
+
+	public Boolean getFezUsoAntibiotico() {
+		return fezUsoAntibiotico;
+	}
+
+	public void setFezUsoAntibiotico(Boolean fezUsoAntibiotico) {
+		this.fezUsoAntibiotico = fezUsoAntibiotico;
+	}
+
+	public Date getDataEntrega() {
+		return dataEntrega;
+	}
+
+	public void setDataEntrega(Date dataEntrega) {
+		this.dataEntrega = dataEntrega;
+	}
+	
+	 public boolean getTemHemocultura() {
+	        return temHemocultura;
+	    }
+
+
+	    public void setTemHemocultura(boolean temHemocultura) {
+	        this.temHemocultura = temHemocultura;
+	    }
+
+	    public boolean getTemUrocultura() {
+	        return temUrocultura;
+	    }
+
+	    public boolean getTemSecrecao() {
+	        return temSecrecao;
+	    }
+
+	    public void setTemUrocultura(boolean temUrocultura) {
+	        this.temUrocultura = temUrocultura;
+	    }
+
+	    public void setTemSecrecao(boolean temSecrecao) {
+	        this.temSecrecao = temSecrecao;
+	    }
 
 }

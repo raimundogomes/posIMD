@@ -1,6 +1,9 @@
 package br.ufrn.sgr.services;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
@@ -13,9 +16,11 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import br.ufrn.imd.sgr.transferObject.RequisicoesTO;
 import br.ufrn.sgr.dao.RequisicaoDao;
 import br.ufrn.sgr.dao.impl.RequisicaoDaoImpl;
 import br.ufrn.sgr.model.Requisicao;
+import br.ufrn.sgr.model.SituacaoRequisicao;
 
 @Path("requisicao") 
 public class RequisicaoServiceWS {
@@ -67,7 +72,6 @@ public class RequisicaoServiceWS {
 			listahtml +=  "</br> Situação: " + requisicao.getStatus()+ "</br> ";
 			listahtml +=  "</br> " + requisicao.getPaciente() + "</br> "; 
 			listahtml +=  "</br> Laboratório: " + requisicao.getLaboratorio() + "</br> ";
-			listahtml +=  "</br> Exames:  " + requisicao.getExamesFormatados()+ "</br></br><HR SIZE='2'></hr> "; 
 		}
 		
 		return listahtml;
@@ -90,9 +94,30 @@ public class RequisicaoServiceWS {
 		listahtml +=  "</br> Data da requisição: " + requisicao.getDataRequisicao() + "</br> ";
 		listahtml +=  "</br> " + requisicao.getPaciente() + "</br> "; 
 		listahtml +=  "</br> Laboratório: " + requisicao.getLaboratorio() + "</br> ";
-		listahtml +=  "</br> Exames:  " + requisicao.getExamesFormatados()+ "</br></br><HR SIZE='2'></hr> "; 
 		
 		return listahtml;
+	}
+	
+	@POST
+	@Path("/consultarRequisicoesAtualizadas")
+	@Produces("application/json")
+	public RequisicoesTO pesquisarRequisicaoAtualizadas(ListaRequisicaoTO param) throws Exception
+	{
+		List<Requisicao> requisicoesAtualizadas =  new ArrayList<Requisicao>();
+		
+		for (Map.Entry<Long, Date> map : param.getMapIdDataUltimaAtualizao().entrySet()) {
+		    Requisicao r = requisicaoDao.pesquisarPorNumero(map.getKey());
+		    
+		    //TODO Adicionar regra para verificar se a requisição foi atualizada após a última atualização.
+		    if(r.getStatus()!=SituacaoRequisicao.SOLICITADA){
+		    	requisicoesAtualizadas.add(r);
+		    }
+		}
+		 
+		 RequisicoesTO lista = new RequisicoesTO();
+		 lista.setListaRequisicoes(requisicoesAtualizadas);
+		
+		return lista;
 	}
 	
 	@GET
@@ -105,6 +130,27 @@ public class RequisicaoServiceWS {
 	public RequisicaoServiceWS() {
 		super();
 		requisicaoDao = new RequisicaoDaoImpl();
+	}
+	
+	@POST
+	@Path("/rejeitar")
+	@Produces("text/html; charset=UTF-8")
+	public String rejeitar(RequisicaoIdTO requisicaoIdTO) throws Exception {
+		try {
+			return requisicaoDao.rejeitar(requisicaoIdTO.getNumeroRequisicao()).toString();
+		} catch (Exception e) {
+			return "Requisicao não encontrada";
+		}
+		
+		
+	}
+	
+	@GET
+	@Produces("application/json")
+	@Path("rejeicao/{numero}")
+	public Requisicao rejeitarRequisicao(@PathParam("numero") long numero) throws Exception{
+		return requisicaoDao.rejeitar(numero);		
+		
 	}
 	
 }

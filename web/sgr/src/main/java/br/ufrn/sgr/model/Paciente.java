@@ -1,8 +1,24 @@
 package br.ufrn.sgr.model;
 
-public class Paciente {
+import java.io.Serializable;
+
+public class Paciente implements Serializable{
 	
-    private Long id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	private Long id;
 
 	private Long prontuario;
 	
@@ -65,7 +81,7 @@ public class Paciente {
 	 * @param cpf
 	 * @param cns
 	 */
-	public Paciente(Long prontuario,String nome, String dataNascimento, String nomeMae, String cpf, String cns) {
+	public Paciente(Long prontuario,String nome, String dataNascimento, String nomeMae, String cpf, String cns, String email, String telefone) {
 		super();
 		this.prontuario = prontuario;
 		this.dataNascimento = dataNascimento;
@@ -73,6 +89,8 @@ public class Paciente {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.cns = cns;
+		this.email = email;
+		this.telefone = telefone;
 	}
 	
 	public Paciente(){

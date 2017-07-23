@@ -1,15 +1,22 @@
 package br.ufrn.sgr.model;
 
 /**
- * Created by Neto on 04/06/2016.
+ * Created by thiago on 29/05/16.
  */
-public enum ResultadoExame {
-    POSITIVO(1, "Positivo"), NEGATIVO(2,"Negativo"), ANALISE_NAO_REALIZADA(3,"Análise não realizada");
+public enum SituacaoExame {
+
+	COLETADO(1, "Coletado"),
+
+    EM_ANALISE(2, "Em análise"),
+
+    FINALIZADO(3, "Finalizado"),
+
+    REJEITADO(4, "Rejeitado");
 
     private int codigo;
     private String descricao;
 
-    ResultadoExame(int codigo, String descricao) {
+    SituacaoExame(int codigo, String descricao) {
         this.codigo = codigo;
         this.descricao = descricao;
     }

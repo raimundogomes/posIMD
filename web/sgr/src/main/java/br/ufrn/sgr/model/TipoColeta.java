@@ -1,16 +1,25 @@
 package br.ufrn.sgr.model;
 
-public enum TipoExame {
 
-    SANGUE (0, "Sangue"),
-    URINA   (1, "Urina"),
-    SECRECAO (2, "Secrecao");
+public enum TipoColeta {
+
+    VEIA (0, "Veia periférica"),
+    ARTERIA   (1, "Arteria"),
+    CATETER_UMBILICAL (2, "Cateter umbilical"),
+    CATETER_CENTRAL (3, "Cateter central"),
+    JATO_MEDIO (4, "Jato médio"),
+    SVD   (5, "SVD"),
+    SONDA_ALIVIO   (6, "Sonda alívio"),
+    PUNCAO_SUBPUBICA (7, "Punção subpúbica"),
+    SACO_COLETOR (8, "Saco coletor"),
+    SWAB (8, "SWAB"),
+    ASPIRADO_AGULHA (8, "SWAB");
 
     private int codigo;
 
     private String descricao;
 
-    TipoExame(int codigo, String descricao) {
+    TipoColeta(int codigo, String descricao) {
         this.codigo = codigo;
         this.descricao = descricao;
     }

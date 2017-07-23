@@ -16,4 +16,6 @@ public interface RequisicaoDao {
 
 	Requisicao pesquisarPorNumero(long numero) throws Exception;
 
+	Requisicao rejeitar(long numero) throws Exception ;
+
 }

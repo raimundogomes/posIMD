@@ -3,91 +3,113 @@ package br.ufrn.sgr.model;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by thiago on 29/05/16.
- */
-public class Exame implements Serializable{
+public class Exame implements Serializable {
 
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private long id;
+	
+	private long numero;
 
 	private TipoExame tipoExame;
 
-    private Amostra amostra;
+	private TipoColeta tipoColeta;
 
-    private ResultadoExame resultadoExame = ResultadoExame.ANALISE_NAO_REALIZADA;
+	private Date dataColeta;
 
-    private String resultadoCompleto ;
-    
-    public Exame(){}
-    
-    public Exame(TipoExame tipo) {
-    	tipoExame = tipo;
-    	amostra = new Amostra();
-    }    
+	private SituacaoExame situacaoExame;
 
-    public String getResultadoCompleto() {
-        return resultadoCompleto;
-    }
+	private TipoMaterial tipoMaterial;
 
-    public void setResultadoCompleto(String resultadoCompleto) {
-        this.resultadoCompleto = resultadoCompleto;
-    }
+	private ResultadoExame resultadoExame = ResultadoExame.ANALISE_NAO_REALIZADA;
 
-    public ResultadoExame getResultadoExame() {
-        return resultadoExame;
-    }
+	private String resultadoCompleto;
+	private long idRequisicao;
 
-    public void setResultadoExame(ResultadoExame resultadoExame) {
-        this.resultadoExame = resultadoExame;
-    }
+	public String getResultadoCompleto() {
+		return resultadoCompleto;
+	}
 
+	public TipoColeta getTipoColeta() {
+		return tipoColeta;
+	}
 
+	public void setTipoColeta(TipoColeta tipoColeta) {
+		this.tipoColeta = tipoColeta;
+	}
 
-    @Override
-    public String toString() {
-        return tipoExame.getDescricao();
-    }
+	public Date getDataColeta() {
+		return dataColeta;
+	}
 
-    public String getDescricao(){
-        return tipoExame.getDescricao();
-    }
+	public void setDataColeta(Date dataColeta) {
+		this.dataColeta = dataColeta;
+	}
 
+	public TipoMaterial getTipoMaterial() {
+		return tipoMaterial;
+	}
 
-    public Amostra getAmostra() {
-        return amostra;
-    }
+	public void setTipoMaterial(TipoMaterial tipoMaterial) {
+		this.tipoMaterial = tipoMaterial;
+	}
 
-    public void setAmostra(Amostra amostra) {
-        this.amostra = amostra;
-    }
+	public void setResultadoCompleto(String resultadoCompleto) {
+		this.resultadoCompleto = resultadoCompleto;
+	}
 
-    public Date getDataColeta() {
-        if(amostra !=null){
-            return amostra.getDataColeta();
-        }
-        return null;
-    }
+	public ResultadoExame getResultadoExame() {
+		return resultadoExame;
+	}
 
-    public String getSituacaoAmostra() {
-        if(amostra !=null){
-          return amostra.getSituacaoAmostra().getDescricao();
-        }
+	public void setResultadoExame(ResultadoExame resultadoExame) {
+		this.resultadoExame = resultadoExame;
+	}
 
-        return "";
-    }
+	public Exame() {
+	}
 
-    public String getResultado(){
+	public Exame(TipoExame tipo) {
+		tipoExame = tipo;
+	}
 
-        if(resultadoExame==null){
-            return "";
-        }
+	@Override
+	public String toString() {
+		return tipoExame.getDescricao();
+	}
 
-        return resultadoExame.getDescricao();
+	public String getDescricao() {
+		return tipoExame.getDescricao();
+	}
 
-    }
+	public String getResultado() {
+
+		if (resultadoExame == null) {
+			return "";
+		}
+
+		return resultadoExame.getDescricao();
+
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public long getNumero() {
+		return numero;
+	}
+
+	public void setNumero(long numero) {
+		this.numero = numero;
+	}
 
 	public TipoExame getTipoExame() {
 		return tipoExame;
@@ -95,6 +117,22 @@ public class Exame implements Serializable{
 
 	public void setTipoExame(TipoExame tipoExame) {
 		this.tipoExame = tipoExame;
+	}
+
+	public long getIdRequisicao() {
+		return idRequisicao;
+	}
+
+	public long setIdRequisicao(long idRequisicao) {
+		return this.idRequisicao = idRequisicao;
+	}
+
+	public SituacaoExame getSituacaoExame() {
+		return situacaoExame;
+	}
+
+	public void setSituacaoExame(SituacaoExame situacaoExame) {
+		this.situacaoExame = situacaoExame;
 	}
 
 }

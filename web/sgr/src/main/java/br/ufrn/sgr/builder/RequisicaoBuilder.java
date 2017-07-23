@@ -9,8 +9,7 @@ import br.ufrn.sgr.exception.PacienteNaoEncontradoException;
 import br.ufrn.sgr.factory.PacienteFactory;
 import br.ufrn.sgr.model.Laboratorio;
 import br.ufrn.sgr.model.Requisicao;
-import br.ufrn.sgr.model.Solicitante;
-import br.ufrn.sgr.model.StatusRequisicao;
+import br.ufrn.sgr.model.SituacaoRequisicao;
 
 
 public class RequisicaoBuilder {
@@ -45,17 +44,17 @@ public class RequisicaoBuilder {
 
         requisicao.setNumero(numeroGerador++);
 
-        requisicao.setExames(examesBulder.getListaExames());
+       // requisicao.setExames(examesBulder.getListaExames());
 
         if(requisicao.getNumero()%2==0) {
-            requisicao.setStatus(StatusRequisicao.SOLICITADA);
+            requisicao.setStatus(SituacaoRequisicao.SOLICITADA);
 
-            requisicao.getExames().add(examesBulder.adicionaExameSangue());
-            requisicao.getExames().add(examesBulder.adicionaExameUrina());
+           // requisicao.getExames().add(examesBulder.adicionaExameSangue());
+        //    requisicao.getExames().add(examesBulder.adicionaExameUrina());
         }
         else{
-            requisicao.setStatus(StatusRequisicao.LAUDO_DEFINITIVO);
-            requisicao.getExames().add(examesBulder.adicionaExameSangueResultadoDefinitivo());
+            requisicao.setStatus(SituacaoRequisicao.FINALIZADA);
+        //    requisicao.getExames().add(examesBulder.adicionaExameSangueResultadoDefinitivo());
             requisicao.setDataUltimaModificacao(new Date());
 
         }
