@@ -78,7 +78,9 @@ public class Exame implements Serializable {
 
 	@Override
 	public String toString() {
-		return tipoExame.getDescricao();
+		return "Exame [numero=" + numero + ", tipoExame=" + tipoExame + ", tipoColeta=" + tipoColeta + ", dataColeta="
+				+ dataColeta + ", situacaoExame=" + situacaoExame + ", tipoMaterial=" + tipoMaterial
+				+ ", resultadoCompleto=" + resultadoCompleto + "]";
 	}
 
 	public String getDescricao() {
@@ -134,5 +136,6 @@ public class Exame implements Serializable {
 	public void setSituacaoExame(SituacaoExame situacaoExame) {
 		this.situacaoExame = situacaoExame;
 	}
+	
 
 }

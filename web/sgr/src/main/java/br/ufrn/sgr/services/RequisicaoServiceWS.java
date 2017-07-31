@@ -1,9 +1,7 @@
 package br.ufrn.sgr.services;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
@@ -19,7 +17,10 @@ import javax.ws.rs.core.Response;
 import br.ufrn.imd.sgr.transferObject.RequisicoesTO;
 import br.ufrn.sgr.dao.RequisicaoDao;
 import br.ufrn.sgr.dao.impl.RequisicaoDaoImpl;
+import br.ufrn.sgr.model.Exame;
 import br.ufrn.sgr.model.Requisicao;
+import br.ufrn.sgr.model.ResultadoExame;
+import br.ufrn.sgr.model.SituacaoExame;
 import br.ufrn.sgr.model.SituacaoRequisicao;
 
 @Path("requisicao") 
@@ -56,7 +57,7 @@ public class RequisicaoServiceWS {
 	
 
 	@GET
-	@Path("/pesquisarRequisicaoPaginada")
+	@Path("/pesquisarRequisicao")
 	@Produces("text/html; charset=UTF-8")
 	public String pesquisarRequisicao(@DefaultValue("0") @QueryParam("inicio") int inicio,
 			@DefaultValue("10") @QueryParam("limite") int limite)	{
@@ -64,7 +65,7 @@ public class RequisicaoServiceWS {
 		
 		List<Requisicao> lista = requisicaoDao.listarRequisicoes().subList(inicio, menorLimite);
 		
-		String listahtml = "Lista de requisições: </br></br><HR SIZE='2'></hr> ";
+		String listahtml = "<body  style=\"font-size:10\">Lista de requisições: </br></br><HR SIZE='2'></hr> ";
 		
 		for (Requisicao requisicao : lista) {
 			listahtml += "</br> Número: " + requisicao.getNumeroFormatado() + "</br> "; 
@@ -72,8 +73,10 @@ public class RequisicaoServiceWS {
 			listahtml +=  "</br> Situação: " + requisicao.getStatus()+ "</br> ";
 			listahtml +=  "</br> " + requisicao.getPaciente() + "</br> "; 
 			listahtml +=  "</br> Laboratório: " + requisicao.getLaboratorio() + "</br> ";
+			listahtml +=  "</br> Exames: " + requisicao.getExames() + "</br> ";
+			listahtml += "<HR SIZE='2'></hr> ";
 		}
-		
+		listahtml += "</body> ";
 		return listahtml;
 	}
 	
@@ -104,14 +107,24 @@ public class RequisicaoServiceWS {
 	public RequisicoesTO pesquisarRequisicaoAtualizadas(ListaRequisicaoTO param) throws Exception
 	{
 		List<Requisicao> requisicoesAtualizadas =  new ArrayList<Requisicao>();
+		System.out.println("consultarRequisicoesAtualizadas:  " + param.toString());
+		///for (Map.Entry<Long, Date> map : param.getMapIdDataUltimaAtualizao().entrySet()) {
+		//    Requisicao r = requisicaoDao.pesquisarPorNumero(map.getKey());
+		//TODO Adicionar regra para verificar se a requisição foi atualizada após a última atualização.
+		// TODO verificar se a requisição é do médico que está solicitando atualização.
 		
-		for (Map.Entry<Long, Date> map : param.getMapIdDataUltimaAtualizao().entrySet()) {
-		    Requisicao r = requisicaoDao.pesquisarPorNumero(map.getKey());
+		List<Requisicao> requisicoes = requisicaoDao.listarRequisicoes(); 
+		
+		for (Requisicao r : requisicoes) {
+			
+		if(param.getMapIdDataUltimaAtualizao().containsKey(r.getNumero())){
+			if(r.getStatus()!=SituacaoRequisicao.SOLICITADA){
+				requisicoesAtualizadas.add(r);
+				System.out.println(r.getStatus());
+			}
+			
+		}
 		    
-		    //TODO Adicionar regra para verificar se a requisição foi atualizada após a última atualização.
-		    if(r.getStatus()!=SituacaoRequisicao.SOLICITADA){
-		    	requisicoesAtualizadas.add(r);
-		    }
 		}
 		 
 		 RequisicoesTO lista = new RequisicoesTO();
@@ -150,6 +163,24 @@ public class RequisicaoServiceWS {
 	@Path("rejeicao/{numero}")
 	public Requisicao rejeitarRequisicao(@PathParam("numero") long numero) throws Exception{
 		return requisicaoDao.rejeitar(numero);		
+		
+	}
+	
+	@GET
+	@Produces("application/json")
+	@Path("finalizar/{numero}/{resultado}")
+	public Requisicao concluirRequisicao(@PathParam("numero") long numero, @PathParam("resultado") String resultado) throws Exception{
+		Requisicao requisicao = requisicaoDao.pesquisarPorNumero(numero);
+		
+		requisicao.setStatus(SituacaoRequisicao.FINALIZADA);
+		
+		for(Exame e : requisicao.getExames()){
+			e.setSituacaoExame(SituacaoExame.FINALIZADO);
+			e.setResultadoExame(ResultadoExame.POSITIVO);
+			e.setResultadoCompleto(resultado);
+		}
+		
+		return requisicao;		
 		
 	}
 	
